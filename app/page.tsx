@@ -1,12 +1,12 @@
 
-import Layout from '@/src/components/Layout/Layout'
+import AuthLayout from '@/src/components/Layout/AuthLayout'
 import React from 'react'
 
 const page = () => {
   return (
-    <Layout>
+    <AuthLayout>
       page
-    </Layout>
+    </AuthLayout>
   )
 }
 

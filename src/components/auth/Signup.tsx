@@ -5,11 +5,42 @@ import { useRouter } from 'next/navigation';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '@/utils/firebase';
 import { FaGoogle } from 'react-icons/fa';
+import * as z from 'zod'
+import {zodResolver} from '@hookform/resolvers/zod'
+
+const registerSchema = z.object({
+  firstName: z.string().min(2, "Firstname must be at least 2 characters"),
+  lastName: z.string().min(2, "Last name must be at least 2 characters"),
+  email: z.string().email("Please enter a valid email address"),
+  password: z
+  .string()
+  .min(8, "Password must be at least 8 characters")
+  .regex(/[A-Z]/, "Password must contain at least one uppercas letter")
+  .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+  .regex(/[0-9]/, "Password must contain at least one number")
+})
+
+export type RegisterFormValues = z.infer<typeof registerSchema>;
 
 const SignUp = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
+
+  const form = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = async (data: RegisterFormValues) => {
+    console.log(data);
+    setIsSubmitting(true);
 
   const handleGoogleSignup = async () => {
     setError('');
@@ -27,8 +58,7 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4">
-      <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+      <div>
         <h1 className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-2">
           Create an Account
         </h1>
@@ -54,8 +84,6 @@ const SignUp = () => {
           </a>
         </div>
       </div>
-    </div>
   );
 };
 
-export default SignUp;

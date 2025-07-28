@@ -9,10 +9,25 @@ import {
 import { auth } from '@/utils/firebase'; ;
 import { Dumbbell } from 'lucide-react';
 import Link from 'next/link';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { toast } from "sonner";
 
 interface LoginProps {
   setIsLogin: (value:boolean) => void;
 }
+
+// Define the validation schema with Zod
+const loginSchema = z.object({
+  email: z.string().email({ message: "Please enter a valid email address" }),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters" }),
+});
+
+// Type for the form values
+export type LoginFormValues = z.infer<typeof loginSchema>; 
 
 const inputStyles = 'border-2 border-gray-400 w-full h-14 rounded-md placeholder:text-gray-400 placeholder:tracking-widest px-3 mt-2 text-white'
 
@@ -20,6 +35,16 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const googleProvider = new GoogleAuthProvider();
+
+  // Initialize react-hook-form with zod validation
+  const form = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
 
   const GoogleLogin = async () => {
     if (loading) return
