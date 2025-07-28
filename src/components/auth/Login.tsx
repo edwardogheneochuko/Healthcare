@@ -45,6 +45,34 @@ const Login = () => {
     },
   });
 
+  // Form submission handler
+  async function onSubmit(values: LoginFormValues) {
+    setIsLoading(true);
+    console.log(values)
+
+    try {
+      // const result = await loginUser(values);
+      // if (result.success) {
+      //   toast.success("Success!", {
+      //     description: result.message,
+      //   });
+      //   // Optional: redirect to login page
+      //   router.push("/dashboard");
+      // } else {
+      //   toast.error("Error", {
+      //     description: result.message,
+      //   });
+      // }
+    } catch (error) {
+      toast.error("Error", {
+        description: "Something went wrong. Please try again.",
+      });
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
 
   const GoogleLogin = async () => {
     if (loading) return
