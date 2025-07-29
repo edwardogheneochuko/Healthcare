@@ -7,18 +7,18 @@ import {
   signInWithPopup,
 } from 'firebase/auth';
 import { auth } from '@/utils/firebase'; ;
-import { Dumbbell } from 'lucide-react';
 import Link from 'next/link';
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
+import Gym from '../global/Gym';
 
 interface LoginProps {
   setIsLogin: (value:boolean) => void;
 }
 
-// Define the validation schema with Zod
+// ✅  Define the validation schema with Zod
 const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address" }),
   password: z
@@ -26,11 +26,12 @@ const loginSchema = z.object({
     .min(8, { message: "Password must be at least 8 characters" }),
 });
 
-// Type for the form values
+// ✅  Type for the form values
 export type LoginFormValues = z.infer<typeof loginSchema>; 
 
 const inputStyles = 'border-2 border-gray-400 w-full h-14 rounded-md placeholder:text-gray-400 placeholder:tracking-widest px-3 mt-2 text-white'
 
+// ✅ main Page
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -98,12 +99,8 @@ const Login = () => {
 
   return (
     <div>
-      <h1 className='text-white flex flex-col items-center gap-1'>
-            <Dumbbell  size={60} className='text-red-200 '/>
-      <p className='text-xl tracking-widest font-bold duration-200 hover:scale-110 '>
-         Gy<span className='text-2xl'>M</span>it
-      </p>
-      </h1>
+       {/* ✅ reusable */}
+     <Gym />
       <div className='flex flex-col gap-4'>
         <h2 className='text-left font-bold text-white text-2xl py-2'>Log in</h2>
         <button
@@ -147,7 +144,10 @@ const Login = () => {
         <label className='text-white text-lg'>Email</label>
         <input type="text" placeholder='your-email@gmail.com' 
         className={inputStyles}/>
+        <span className='flex justify-between'>
         <label className='text-white text-lg'>Password</label>
+        <Link href='/forgot-password' className='text-sm text-red-300'>Forgot Password</Link>
+        </span>
         <input type="text" placeholder='-------' className={inputStyles} />
         <button className='text-black w-full py-4 rounded-4xl text-lg
         bg-neutral-300 hover:bg-white cursor-pointer duration-200'>
@@ -156,7 +156,7 @@ const Login = () => {
         <div className="text-center text-gray-50 ">
           I don't have an account ?{' '}
           <Link href={'/signup'}
-           className="text-blue-400 font-medium hover:underline cursor-pointer">
+           className="text-blue-400 font-medium cursor-pointer">
             Sign Up
           </Link>
         </div>

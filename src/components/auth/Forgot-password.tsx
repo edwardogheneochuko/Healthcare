@@ -1,29 +1,18 @@
 'use client'
-
 import Link from "next/link";
-import { SVGAttributes } from "react";
+import Gym from "../global/Gym";
+
 
 export default function ForgotPassword() {
   return (
-    <section className="flex min-h-screen bg-zinc-50 px-4 py-16 md:py-32 dark:bg-transparent">
-      <form
-        action=""
-        className="bg-muted m-auto h-fit w-full max-w-sm overflow-hidden rounded-lg border shadow-md shadow-zinc-950/5 dark:bg-zinc-900"
-      >
-        <div className="bg-card -m-px rounded-lg border p-8 pb-6 dark:bg-zinc-900">
-          <div>
-            <Link href="/" aria-label="go home">
-              <AppLogoIcon className="h-10 fill-current text-black dark:text-white sm:h-12" />
-            </Link>
-            <h1 className="mb-1 mt-4 text-xl font-semibold">
-              Recover Password
-            </h1>
-            <p className="text-sm">Enter your email to receive a reset link</p>
-          </div>
+      <form className="text-white">
+        <Gym />
+          <h2 className='text-left font-bold text-white text-2xl mt-5'>
+            Recover Password
+          </h2>
 
-          <div className="mt-6 space-y-6">
-            <div className="space-y-2">
-              <label htmlFor="email" className="block text-sm font-medium">
+          <div className="mt-3 space-y-6">
+              <label htmlFor="email" className="text-lg">
                 Email
               </label>
               <input
@@ -32,49 +21,27 @@ export default function ForgotPassword() {
                 name="email"
                 id="email"
                 placeholder="name@example.com"
-                className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:bg-zinc-800 dark:border-zinc-700 dark:text-white"
+                className="border-2 border-gray-400 w-full h-14 rounded-md placeholder:text-gray-400 placeholder:tracking-widest px-3 mt-2 text-white"
               />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition"
-            >
-              Send Reset Link
+            <button className='text-black w-full py-4 rounded-4xl text-lg
+            bg-neutral-300 hover:bg-white cursor-pointer duration-200'>
+               Send Reset Link
             </button>
           </div>
 
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600 dark:text-zinc-400">
+          <div className="mt-6 space-y-3 text-center">
+            <p className="text-sm text-gray-500">
               We'll send you a link to reset your password.
             </p>
-          </div>
-        </div>
-
-        <div className="p-3">
-          <p className="text-center text-sm text-gray-700 dark:text-zinc-300">
-            Remembered your password?
-            <Link
-              href="/preview/login/two"
-              className="ml-1 text-blue-600 hover:underline dark:text-blue-400"
-            >
+            <p className="text-center text-sm ">
+              Remembered your password?
+            <Link href="/login" className="text-blue-400 font-medium cursor-pointer ml-2">
               Log in
             </Link>
           </p>
-        </div>
+          </div>
       </form>
-    </section>
   );
 }
 
-export function AppLogoIcon(props: SVGAttributes<SVGElement>) {
-  return (
-    <svg {...props} viewBox="0 0 40 42" xmlns="http://www.w3.org/2000/svg">
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M17.2 5.63325L8.6 0.855469L0 5.63325V32.1434L16.2 41.1434L32.4 32.1434V23.699L40 19.4767V9.85547L31.4 5.07769L22.8 9.85547V18.2999L17.2 21.411V5.63325ZM38 18.2999L32.4 21.411V15.2545L38 12.1434V18.2999ZM36.9409 10.4439L31.4 13.5221L25.8591 10.4439L31.4 7.36561L36.9409 10.4439ZM24.8 18.2999V12.1434L30.4 15.2545V21.411L24.8 18.2999ZM23.8 20.0323L29.3409 23.1105L16.2 30.411L10.6591 27.3328L23.8 20.0323ZM7.6 27.9212L15.2 32.1434V38.2999L2 30.9666V7.92116L7.6 11.0323V27.9212ZM8.6 9.29991L3.05913 6.22165L8.6 3.14339L14.1409 6.22165L8.6 9.29991ZM30.4 24.8101L17.2 32.1434V38.2999L30.4 30.9666V24.8101ZM9.6 11.0323L15.2 7.92117V22.5221L9.6 25.6333V11.0323Z"
-      />
-    </svg>
-  );
-}
+
