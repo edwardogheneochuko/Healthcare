@@ -1,20 +1,21 @@
-import SignUp from '@/src/components/auth/Signup'
-import React from 'react'
+import SignUp from '@/src/components/auth/Signup';
+import React from 'react';
 
 const page = () => {
   return (
-    <div className='w-full h-screen flex relative overflow-hidden bg-black'>
-        <div className='w-[40%] h-screen max-md:hidden'>
-            open
-        </div>
-      <div className='w-full h-screen'>
-        <div className='flex items-center max-md:justify-center h-full sm:w-[600px] 
-        w-[100%] md:px-[8rem] px-[2rem]'>
-            <SignUp />
+    <div className='w-full h-screen flex relative bg-black'>
+      <div className='w-[40%] h-screen max-md:hidden'>
+        open
+      </div>
+
+      {/* Scrollable section */}
+      <div className='w-full h-screen overflow-y-auto overflow-x-hidden'>
+        <div className='flex items-center max-md:justify-center min-h-full sm:w-[600px] w-full md:px-[8rem] px-[2rem] py-8'>
+          <SignUp />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

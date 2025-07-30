@@ -1,19 +1,24 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+
+// ✅ form validation
+import * as z from 'zod';
+import { useForm } from 'react-hook-form';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '@/utils/firebase';
-import { FaGoogle } from 'react-icons/fa';
-import * as z from 'zod';
-import { useForm } from 'react-hook-form'; // ✅ 
 import { zodResolver } from '@hookform/resolvers/zod';
 import Gym from '../global/Gym';
 
+// ✅notification, icons and router
+import { useRouter } from 'next/navigation';
+import { FaGoogle } from 'react-icons/fa';
+import { toast } from "sonner";
+
 // ✅ Define the validation with schema 
 const registerSchema = z.object({
-  firstName: z.string().min(2, "Firstname must be at least 2 characters"),
-  lastName: z.string().min(2, "Last name must be at least 2 characters"),
+  Name: z.string().min(2, "Firstname must be at least 2 characters"),
+  UserName: z.string().min(2, "Last name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
   password: z
     .string()
@@ -25,7 +30,7 @@ const registerSchema = z.object({
 
 // ✅  Type for the form values
 export type RegisterFormValues = z.infer<typeof registerSchema>;
-const inputStyles = 'border-2 border-gray-400 w-full h-14 rounded-md placeholder:text-gray-400 placeholder:tracking-widest px-3 mt-2 text-white'
+const inputStyles = 'border-2 border-gray-400 w-full h-14 rounded-md placeholder:text-gray-400 placeholder:tracking-widest px-3 mt-2 text-white '
 
 // ✅ main page
 const SignUp = () => {
@@ -39,8 +44,8 @@ const SignUp = () => {
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      Name: "",
+      UserName: "",
       email: "",
       password: "",
     },
@@ -49,12 +54,37 @@ const SignUp = () => {
   const onSubmit = async (data: RegisterFormValues) => {
     console.log(data);
     setIsSubmitting(true);
+    toast.success("Processing your request...")
+    form.reset(); // 👈 Clears the input fields
+
     // ... handle form registration here
+    try {
+      // const result = await registerUser(data);
+      // if (result.success) {
+      //   toast.success("Success!", {
+      //     description: result.message,
+      //   });
+      //   // Optional: redirect to login page
+      //   router.push("/dashboard");
+      // } else {
+      //   toast.error("Error", {
+      //     description: result.message,
+      //   });
+      // }
+    } catch (error) {
+      toast.error("Error", {
+        description: "Something went wrong. Please try again.",
+      });
+      console.log(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const GoogleSignup = async () => {
     setError('');
     setLoading(true);
+    toast.success("Processing your request...")
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
@@ -71,18 +101,33 @@ const SignUp = () => {
     <div className='text-white'>
        <Gym />
       <div>
-      {
-      isOpen ? 
-        <form className='text-lg space-y-3'>
+      { isOpen ? 
+        <form onSubmit={form.handleSubmit(onSubmit)} className='text-lg space-y-3'>
         <label>Name</label>
-        <input type="text" placeholder='your-email@gmail.com' className={inputStyles} />
+        <input type="text" {...form.register("Name")}
+        placeholder='your-email@gmail.com' className={inputStyles} />
+        {form.formState.errors.Name && (
+          <p className='text-red-500 text-sm'>{form.formState.errors.Name.message}</p>
+        )}
         <label>UserName</label>
-        <input type="text" placeholder='e.g John Doe' className={inputStyles} />
+        <input type="text" {...form.register("UserName")}
+        placeholder='e.g John Doe' className={inputStyles} />
+        {form.formState.errors.UserName && (
+          <p className='text-red-500 text-sm'>{form.formState.errors.UserName.message}</p>
+        )}
         <label>Email</label>
-        <input type="text" placeholder='your@example.com' className={inputStyles} />
+        <input type="text" {...form.register("email")}
+        placeholder='your@example.com' className={inputStyles} />
+        {form.formState.errors.email && (
+          <p className='text-red-500 text-sm'>{form.formState.errors.email.message}</p>
+        )}
         <label>Password</label>
-        <input type="confirm-password" placeholder='------+' className={inputStyles} />
-        <button className='text-black w-full py-4 rounded-4xl text-lg
+        <input type="password" {...form.register("password")}
+         placeholder='------+' className={inputStyles} />
+         {form.formState.errors.password && (
+          <p className='text-red-500 text-sm'>{form.formState.errors.password.message}</p>
+         )}
+        <button type='submit' className='text-black w-full py-4 rounded-4xl text-lg
         bg-neutral-300 hover:bg-white cursor-pointer duration-200'>
           Create Account
         </button>

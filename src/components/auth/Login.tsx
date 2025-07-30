@@ -48,7 +48,6 @@ const Login = () => {
 
   // Form submission handler
   async function onSubmit(values: LoginFormValues) {
-    setIsLoading(true);
     console.log(values)
 
     try {
@@ -70,7 +69,6 @@ const Login = () => {
       });
       console.log(error);
     } finally {
-      setIsLoading(false);
     }
   }
 
@@ -140,16 +138,17 @@ const Login = () => {
   <span className='flex-1 h-px bg-gray-300'></span>
  </div>
       </div>
-      <div className='space-y-4 mt-5'>
-        <label className='text-white text-lg'>Email</label>
-        <input type="text" placeholder='your-email@gmail.com' 
+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4 mt-5'>
+        <label className='text-white text-lg' >Email</label>
+        <input type="text" {...form.register('email')} placeholder='your-email@gmail.com' 
         className={inputStyles}/>
         <span className='flex justify-between'>
         <label className='text-white text-lg'>Password</label>
         <Link href='/forgot-password' className='text-sm text-red-300'>Forgot Password</Link>
         </span>
-        <input type="text" placeholder='-------' className={inputStyles} />
-        <button className='text-black w-full py-4 rounded-4xl text-lg
+        <input type="password" {...form.register('password')}
+         placeholder='-------' className={inputStyles} />
+        <button type='submit' className='text-black w-full py-4 rounded-4xl text-lg
         bg-neutral-300 hover:bg-white cursor-pointer duration-200'>
           Log in
         </button>
@@ -160,7 +159,7 @@ const Login = () => {
             Sign Up
           </Link>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
