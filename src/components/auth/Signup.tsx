@@ -12,13 +12,14 @@ import Gym from '../global/Gym';
 
 // ✅notification, icons and router
 import { useRouter } from 'next/navigation';
-import { FaGoogle } from 'react-icons/fa';
 import { toast } from "sonner";
+import { registerUser } from '@/actions/users';
 
 // ✅ Define the validation with schema 
 const registerSchema = z.object({
-  Name: z.string().min(2, "Firstname must be at least 2 characters"),
-  UserName: z.string().min(2, "Last name must be at least 2 characters"),
+  name: z.string().min(2, "First name must be at least 2 characters"),
+  userName: z.string().min(2, "Last name must be at least 2 characters")
+  .regex(/[A-Z]/, "Password must contain at least one uppercase letter"),
   email: z.string().email("Please enter a valid email address"),
   password: z
     .string()
@@ -44,8 +45,8 @@ const SignUp = () => {
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      Name: "",
-      UserName: "",
+      name: "",
+      userName: "",
       email: "",
       password: "",
     },
@@ -53,24 +54,24 @@ const SignUp = () => {
 
   const onSubmit = async (data: RegisterFormValues) => {
     console.log(data);
+    toast.info('Processing Info')
     setIsSubmitting(true);
-    toast.success("Processing your request...")
     form.reset(); // 👈 Clears the input fields
 
     // ... handle form registration here
     try {
-      // const result = await registerUser(data);
-      // if (result.success) {
-      //   toast.success("Success!", {
-      //     description: result.message,
-      //   });
-      //   // Optional: redirect to login page
-      //   router.push("/dashboard");
-      // } else {
-      //   toast.error("Error", {
-      //     description: result.message,
-      //   });
-      // }
+      const result = await registerUser(data);
+      if (result.success) {
+        toast.success("Success!", {
+          description: "Account has been created",
+        });
+        // Optional: redirect to login page
+        router.push("/dashboard");
+      } else {
+        toast.error("Error", {
+          description: result.error,
+        });
+      }
     } catch (error) {
       toast.error("Error", {
         description: "Something went wrong. Please try again.",
@@ -104,16 +105,16 @@ const SignUp = () => {
       { isOpen ? 
         <form onSubmit={form.handleSubmit(onSubmit)} className='text-lg space-y-3'>
         <label>Name</label>
-        <input type="text" {...form.register("Name")}
-        placeholder='your-email@gmail.com' className={inputStyles} />
-        {form.formState.errors.Name && (
-          <p className='text-red-500 text-sm'>{form.formState.errors.Name.message}</p>
+        <input type="text" {...form.register("name")}
+        placeholder='John Doe' className={inputStyles} />
+        {form.formState.errors.name && (
+          <p className='text-red-500 text-sm'>{form.formState.errors.name.message}</p>
         )}
         <label>UserName</label>
-        <input type="text" {...form.register("UserName")}
-        placeholder='e.g John Doe' className={inputStyles} />
-        {form.formState.errors.UserName && (
-          <p className='text-red-500 text-sm'>{form.formState.errors.UserName.message}</p>
+        <input type="text" {...form.register("userName")}
+        placeholder='e.g refree' className={inputStyles} />
+        {form.formState.errors.userName && (
+          <p className='text-red-500 text-sm'>{form.formState.errors.userName.message}</p>
         )}
         <label>Email</label>
         <input type="text" {...form.register("email")}
