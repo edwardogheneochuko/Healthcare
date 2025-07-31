@@ -17,9 +17,8 @@ import { registerUser } from '@/actions/users';
 
 // ✅ Define the validation with schema 
 const registerSchema = z.object({
-  name: z.string().min(2, "First name must be at least 2 characters"),
-  userName: z.string().min(2, "Last name must be at least 2 characters")
-  .regex(/[A-Z]/, "Password must contain at least one uppercase letter"),
+  firstName: z.string().min(2, "First name must be at least 2 characters"),
+  lastName: z.string().min(2, "Last name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
   password: z
     .string()
@@ -45,8 +44,8 @@ const SignUp = () => {
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      name: "",
-      userName: "",
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
     },
@@ -62,22 +61,17 @@ const SignUp = () => {
     try {
       const result = await registerUser(data);
       if (result.success) {
-        toast.success("Success!", {
-          description: "Account has been created",
-        });
-        // Optional: redirect to login page
+        toast.success("Success!", { description: "Account has been created" });
         router.push("/dashboard");
       } else {
-        toast.error("Error", {
-          description: result.error,
-        });
+        toast.error("Error", { description: result.error || "Unknown error" });
+        console.error("Signup failed:", result.error);
       }
     } catch (error) {
-      toast.error("Error", {
-        description: "Something went wrong. Please try again.",
-      });
-      console.log(error);
-    } finally {
+      toast.error("Error", { description: "Something went wrong. Please try again." });
+      console.error("Unexpected signup error:", error);
+    }
+     finally {
       setIsSubmitting(false);
     }
   };
@@ -104,17 +98,17 @@ const SignUp = () => {
       <div>
       { isOpen ? 
         <form onSubmit={form.handleSubmit(onSubmit)} className='text-lg space-y-3'>
-        <label>Name</label>
-        <input type="text" {...form.register("name")}
-        placeholder='John Doe' className={inputStyles} />
-        {form.formState.errors.name && (
-          <p className='text-red-500 text-sm'>{form.formState.errors.name.message}</p>
+        <label>FirstName</label>
+        <input type="text" {...form.register("firstName")}
+        placeholder='First Name' className={inputStyles} />
+        {form.formState.errors.firstName && (
+          <p className='text-red-500 text-sm'>{form.formState.errors.firstName.message}</p>
         )}
-        <label>UserName</label>
-        <input type="text" {...form.register("userName")}
-        placeholder='e.g refree' className={inputStyles} />
-        {form.formState.errors.userName && (
-          <p className='text-red-500 text-sm'>{form.formState.errors.userName.message}</p>
+        <label>LastName</label>
+        <input type="text" {...form.register("lastName")}
+        placeholder='Last Name' className={inputStyles} />
+        {form.formState.errors.lastName && (
+          <p className='text-red-500 text-sm'>{form.formState.errors.lastName.message}</p>
         )}
         <label>Email</label>
         <input type="text" {...form.register("email")}
