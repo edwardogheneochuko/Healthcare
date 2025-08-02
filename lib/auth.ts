@@ -12,26 +12,25 @@ export const auth = betterAuth({
     enabled: true,
     minPasswordLength: 8,
     autoSignIn: true,
-
-    // ✅ Add this section:
-    user: {
-      additionalFields: {
-        role: {
-          type: "string",
-          required: false,
-          defaultValue: "USER",
-          input: false 
-        },
-        firstName: {
-          type: "string",
-          required: true,
-        },
-        lastName: {
-          type: "string",
-          required: true,
-        },
+  },
+  // ✅ Add this section:
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        required: false,
+        defaultValue: "USER",
+        input: false 
       },
-    }
+      firstName: {
+        type: "string",
+        required: true,
+      },
+      lastName: {
+        type: "string",
+        required: true,
+      },
+    },
   },
   account: {
     accountLinking: {
