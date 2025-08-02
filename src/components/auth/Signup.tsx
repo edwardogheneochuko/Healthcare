@@ -60,6 +60,8 @@ const SignUp = () => {
     // ... handle form registration here
     try {
       const result = await registerUser(data);
+      console.log("Creating user with data:", data);
+
       if (result.success) {
         toast.success("Success!", { description: "Account has been created" });
         router.push("/dashboard");

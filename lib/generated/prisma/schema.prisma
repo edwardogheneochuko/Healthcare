@@ -13,12 +13,13 @@ model User {
   id            String    @id @default(cuid())
   role          UserRole  @default(USER)
   email         String    @unique
-  emailVerified Boolean
+  emailVerified Boolean   @default(false)
+  password      String?
   image         String?
-  createdAt     DateTime
-  updatedAt     DateTime
-  firstName     String
-  lastName      String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now())
+  firstName     String?
+  lastName      String?
   accounts      Account[]
   sessions      Session[]
 

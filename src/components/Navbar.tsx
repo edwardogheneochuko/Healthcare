@@ -1,9 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../utils/firebase';
+import {auth} from '@/utils/firebase'
 import Image from 'next/image';
 
 const Navbar = () => {

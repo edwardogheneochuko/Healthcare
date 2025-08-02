@@ -5,14 +5,15 @@ import { RegisterFormValues } from "@/src/components/auth/Signup";
 
 export async function registerUser(data: RegisterFormValues) {
   try {
-    // signUpEmail expects the additional fields to be inside 'body'
+    
     await auth.api.signUpEmail({
       body: {
         email: data.email,
         password: data.password,
+        name: `${data.firstName} ${data.lastName}`, 
         firstName: data.firstName,
         lastName: data.lastName,
-      } as any,
+      } ,
     });
     return {
       success: true,
