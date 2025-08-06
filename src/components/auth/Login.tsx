@@ -13,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
 import Gym from '../global/Gym';
+import Socials from '../global/Socials';
 
 interface LoginProps {
   setIsLogin: (value:boolean) => void;
@@ -101,37 +102,7 @@ const Login = () => {
      <Gym />
       <div className='flex flex-col gap-4'>
         <h2 className='text-left font-bold text-white text-2xl py-2'>Log in</h2>
-        <button
-  onClick={GoogleLogin}
-  disabled={loading}
-  className="w-full bg-neutral-200 hover:bg-white duration-200 text-black border rounded-4xl text-lg
-   border-gray-300 py-3 px-4 shadow-sm flex items-center justify-center gap-3 transition disabled:opacity-60
-   cursor-pointer">
-  {/* Google SVG Icon */}
-  <svg
-    className="w-5 h-5"
-    viewBox="0 0 488 512"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      fill="#EA4335"
-      d="M488 261.8c0-17.4-1.5-34.1-4.3-50.3H249v95.2h135.6c-5.8 31.4-23 58-48.9 75.9v62.9h78.9c46.2-42.6 73.4-105.4 73.4-183.7z"
-    />
-    <path
-      fill="#34A853"
-      d="M249 492c65.7 0 120.7-21.7 160.9-59.1l-78.9-62.9c-21.9 14.6-50 23.2-82 23.2-62.9 0-116.2-42.5-135.2-99.6H32.9v62.6C73.6 439.2 155.4 492 249 492z"
-    />
-    <path
-      fill="#4A90E2"
-      d="M113.8 293.6c-6.4-19-10-39.3-10-60.1s3.6-41.1 10-60.1V110.9H32.9C11.8 151.3 0 198.6 0 245.5s11.8 94.2 32.9 134.6l80.9-63.1z"
-    />
-    <path
-      fill="#FBBC05"
-      d="M249 97.6c35.8 0 67.9 12.3 93.3 36.4l70.1-70.1C369.6 25.6 314.7 0 249 0 155.4 0 73.6 52.8 32.9 110.9l80.9 62.6c19-57.1 72.3-99.6 135.2-99.6z"
-    />
-  </svg>
-  {loading ? 'Processing...' : 'Log in with Google'}
-</button>
+        <Socials />
  <div className='flex items-center gap-4'>
   <span className='flex-1 h-px bg-gray-300'></span>
   <span className='text-gray-500'>or</span>
