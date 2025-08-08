@@ -2,7 +2,6 @@
 
 import { auth } from "@/lib/auth";
 import { RegisterFormValues } from "@/src/components/auth/Signup";
-import bcrypt from 'bcrypt';
 
 
 export async function registerUser(data: RegisterFormValues) {

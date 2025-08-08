@@ -1,77 +1,78 @@
 'use client';
 
 import React, { useState } from 'react';
-
-// ✅ form validation
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '@/utils/firebase';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Gym from '../global/Gym';
-
-// ✅ notification, icons, and router
 import { useRouter } from 'next/navigation';
-import { toast } from "sonner";
+import { toast } from 'sonner';
 import { registerUser } from '@/actions/users';
+import { Eye, EyeOff } from 'lucide-react';
 
-// ✅ Define the validation with schema
+// Validation schema
 const registerSchema = z.object({
-  firstName: z.string().min(2, "First name must be at least 2 characters"),
-  lastName: z.string().min(2, "Last name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email address"),
+  firstName: z.string().min(2, 'First name must be at least 2 characters'),
+  lastName: z.string().min(2, 'Last name must be at least 2 characters'),
+  email: z.string().email('Please enter a valid email address'),
   password: z
     .string()
-    .min(8, "Password must be at least 8 characters")
-    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-    .regex(/[0-9]/, "Password must contain at least one number"),
+    .min(8, 'Password must be at least 8 characters')
+    .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .regex(/[0-9]/, 'Password must contain at least one number'),
 });
 
-// ✅ Type for the form values
 export type RegisterFormValues = z.infer<typeof registerSchema>;
-const inputStyles = 'border-2 border-gray-400 w-full h-14 rounded-md placeholder:text-gray-400 placeholder:tracking-widest px-3 mt-2 text-white ';
 
-// ✅ main page
-const SignUp = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+const inputStyles =
+  'bg-transparent border-2 border-gray-400 w-full h-14 rounded-md placeholder:text-gray-400 placeholder:tracking-widest px-3 mt-2 text-white focus:outline-none';
+
+const SignUp: React.FC = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false); // for form submit
+  const [loading, setLoading] = useState(false); // for google auth
+  const [isOpen, setIsOpen] = useState(false); // show email form
   const [error, setError] = useState('');
   const router = useRouter();
 
-  // ✅ Initialize react-hook-form with zod validation
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
     },
   });
 
   const onSubmit = async (data: RegisterFormValues) => {
-    console.log(data);
-    toast.info('Processing Info');
+    setError('');
     setIsSubmitting(true);
-    form.reset(); // 👈 Clears the input fields
+    toast.info('Processing Info');
 
-    // ... handle form registration here
     try {
-      const result = await registerUser(data);
-      console.log("Creating user with data:", data);
+      console.log('Creating user with data:', data);
+      const result = await registerUser(data); // your server action
 
-      if (result.success) {
-        toast.success("Success!", { description: "Account has been created" });
-        router.push("/dashboard");
+      if (result?.success) {
+        toast.success('Success!', { description: 'Account has been created' });
+        form.reset(); // reset after success
+        router.push('/dashboard');
       } else {
-        toast.error("Error", { description: result.error || "Unknown error" });
-        console.error("Signup failed:", result.error);
+        // keep inputs so user can correct
+        const message = result?.error || 'Signup failed. Please try again.';
+        toast.error('Error', { description: message });
+        setError(message);
+        console.error('Signup failed:', result?.error);
       }
-    } catch (error) {
-      toast.error("Error", { description: "Something went wrong. Please try again." });
-      console.error("Unexpected signup error:", error);
+    } catch (err) {
+      const message =
+        (err as any)?.message || 'Something went wrong. Please try again.';
+      toast.error('Error', { description: message });
+      setError(message);
+      console.error('Unexpected signup error:', err);
     } finally {
       setIsSubmitting(false);
     }
@@ -80,148 +81,164 @@ const SignUp = () => {
   const GoogleSignup = async () => {
     setError('');
     setLoading(true);
-    toast.success("Processing your request...");
+    toast.info('Processing Google sign up...');
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
-      console.log('User signed up:', result.user);
+      console.log('User signed up via Google:', result.user);
+      toast.success('Signed in with Google');
       router.push('/dashboard');
     } catch (err: any) {
-      setError('Google signup failed.');
+      const message =
+        err?.message || 'Google signup failed. Please try again or use email.';
+      setError(message);
+      toast.error('Google signup failed', { description: message });
+      console.error('Google signup error:', err);
     } finally {
       setLoading(false);
     }
   };
 
-  // Password input field with visibility toggle
-  const PasswordInput = () => {
-    const [passwordVisible, setPasswordVisible] = useState(false); // State to track visibility
-
-    const togglePasswordVisibility = () => {
-      setPasswordVisible(!passwordVisible);
-    };
+  // Password input as an inner component
+  const PasswordInput: React.FC = () => {
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const toggle = () => setPasswordVisible((v) => !v);
 
     return (
       <div className="relative">
         <input
-          type={passwordVisible ? "text" : "password"} // Toggle between password and text
+          type={passwordVisible ? 'text' : 'password'}
           placeholder="Password"
-          {...form.register("password")}
+          {...form.register('password')}
           className={inputStyles}
+          aria-invalid={!!form.formState.errors.password}
         />
-        {/* Eye icon to toggle visibility */}
         <button
           type="button"
-          onClick={togglePasswordVisibility}
-          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+          aria-label={passwordVisible ? 'Hide password' : 'Show password'}
+          onClick={toggle}
+          className="absolute right-3 cursor-pointer top-1/2 transform -translate-y-1/2 text-gray-400"
         >
-          {passwordVisible ? (
-            <svg
-              className="w-10 h-10"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 12c0 3-2.25 5.25-5 5.25S5 15 5 12s2.25-5.25 5-5.25 5 2.25 5 5.25z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M17.657 17.657a9.969 9.969 0 01-3.9 2.687c-.635.206-1.287.343-1.957.343a9.969 9.969 0 01-5.823-1.89m4.708-4.707a9.969 9.969 0 01-2.436 3.9"
-              />
-            </svg>
-          ) : (
-            <svg
-              className="w-10 h-10"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 12c0 3-2.25 5.25-5 5.25S5 15 5 12s2.25-5.25 5-5.25 5 2.25 5 5.25z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15.5 11.5a9.969 9.969 0 01-.736 3.174l-1.314-1.314A4.96 4.96 0 0015 12a4.963 4.963 0 00-2.84-.867L15.5 11.5z"
-              />
-            </svg>
-          )}
+          {passwordVisible ? <EyeOff size={20} /> : <Eye size={20} />}
         </button>
       </div>
     );
   };
 
   return (
-    <div className='text-white'>
+    <div className="text-white max-w-md mx-auto">
       <Gym />
-      <div>
-        {isOpen ?
-          <form onSubmit={form.handleSubmit(onSubmit)} className='text-lg space-y-3'>
-            <label>FirstName</label>
+      <div className="p-4">
+        {isOpen ? (
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="text-lg space-y-3"
+            noValidate
+          >
+            <label className="block">First Name</label>
             <input
               type="text"
-              {...form.register("firstName")}
-              placeholder='First Name' className={inputStyles}
+              {...form.register('firstName')}
+              placeholder="First Name"
+              className={inputStyles}
+              aria-invalid={!!form.formState.errors.firstName}
             />
             {form.formState.errors.firstName && (
-              <p className='text-red-500 text-sm'>{form.formState.errors.firstName.message}</p>
+              <p
+                className="text-red-500 text-sm mt-1"
+                role="alert"
+                aria-live="polite"
+              >
+                {form.formState.errors.firstName.message}
+              </p>
             )}
-            <label>LastName</label>
+
+            <label className="block">Last Name</label>
             <input
               type="text"
-              {...form.register("lastName")}
-              placeholder='Last Name' className={inputStyles}
+              {...form.register('lastName')}
+              placeholder="Last Name"
+              className={inputStyles}
+              aria-invalid={!!form.formState.errors.lastName}
             />
             {form.formState.errors.lastName && (
-              <p className='text-red-500 text-sm'>{form.formState.errors.lastName.message}</p>
+              <p
+                className="text-red-500 text-sm mt-1"
+                role="alert"
+                aria-live="polite"
+              >
+                {form.formState.errors.lastName.message}
+              </p>
             )}
-            <label>Email</label>
+
+            <label className="block">Email</label>
             <input
-              type="text"
-              {...form.register("email")}
-              placeholder='your@example.com' className={inputStyles}
+              type="email"
+              {...form.register('email')}
+              placeholder="your@example.com"
+              className={inputStyles}
+              aria-invalid={!!form.formState.errors.email}
             />
             {form.formState.errors.email && (
-              <p className='text-red-500 text-sm'>{form.formState.errors.email.message}</p>
+              <p
+                className="text-red-500 text-sm mt-1"
+                role="alert"
+                aria-live="polite"
+              >
+                {form.formState.errors.email.message}
+              </p>
             )}
-            <label>Password</label>
+
+            <label className="block">Password</label>
             <PasswordInput />
             {form.formState.errors.password && (
-              <p className='text-red-500 text-sm'>{form.formState.errors.password.message}</p>
+              <p
+                className="text-red-500 text-sm mt-1"
+                role="alert"
+                aria-live="polite"
+              >
+                {form.formState.errors.password.message}
+              </p>
             )}
+
+            {error && (
+              <p className="text-red-500 text-sm mt-1" role="alert" aria-live="polite">
+                {error}
+              </p>
+            )}
+
             <button
-              type='submit'
-              className='text-black w-full py-4 rounded-4xl text-lg bg-neutral-300 hover:bg-white cursor-pointer duration-200'
+              type="submit"
+              disabled={isSubmitting}
+              className="text-black w-full py-4 rounded-4xl text-lg bg-neutral-300 hover:bg-white cursor-pointer duration-200 disabled:opacity-60"
             >
-              Create Account
+              {isSubmitting ? 'Creating account...' : 'Create Account'}
             </button>
-            <p onClick={() => setIsOpen(false)} className='text-center text-gray-600 cursor-pointer'>Back</p>
-          </form>
-          :
-          <div className='flex flex-col gap-4 mt-3'>
-            <h1 className="text-2xl font-bold mb-2 text-left">Sign up</h1>
-            <button
-              disabled={loading}
-              className="w-full bg-neutral-200 hover:bg-white duration-200 text-black border rounded-4xl text-lg
-              border-gray-300 py-3 px-4 shadow-sm flex items-center justify-center gap-3 transition disabled:opacity-60 cursor-pointer"
+
+            <p
+              onClick={() => setIsOpen(false)}
+              className="text-center text-gray-600 cursor-pointer mt-2"
             >
-              {/* Google SVG Icon */}
+              Back
+            </p>
+          </form>
+        ) : (
+          <div className="flex flex-col gap-4 mt-3">
+            <h1 className="text-2xl font-bold mb-2 text-left text-white">
+              Sign up
+            </h1>
+
+            <button
+              onClick={GoogleSignup}
+              disabled={loading}
+              className="w-full bg-neutral-200 hover:bg-white duration-200 text-black border rounded-4xl text-lg border-gray-300 py-3 px-4 shadow-sm flex items-center justify-center gap-3 transition disabled:opacity-60"
+            >
+              {/* Google SVG */}
               <svg
                 className="w-5 h-5"
                 viewBox="0 0 488 512"
                 xmlns="http://www.w3.org/2000/svg"
+                aria-hidden
               >
                 <path
                   fill="#EA4335"
@@ -240,24 +257,35 @@ const SignUp = () => {
                   d="M249 97.6c35.8 0 67.9 12.3 93.3 36.4l70.1-70.1C369.6 25.6 314.7 0 249 0 155.4 0 73.6 52.8 32.9 110.9l80.9 62.6c19-57.1 72.3-99.6 135.2-99.6z"
                 />
               </svg>
+
               {loading ? 'Processing...' : 'Sign up with Google'}
             </button>
-            <div className='flex items-center gap-4'>
-              <span className='flex-1 h-px bg-gray-300'></span>
-              <span className='text-gray-500'>or</span>
-              <span className='flex-1 h-px bg-gray-300'></span>
+
+            <div className="flex items-center gap-4">
+              <span className="flex-1 h-px bg-gray-300" />
+              <span className="text-gray-500">or</span>
+              <span className="flex-1 h-px bg-gray-300" />
             </div>
-            <button onClick={() => setIsOpen(true)} 
-              className='w-full bg-black hover:bg-neutral-900 duration-200 border rounded-4xl text-lg
-              border-gray-800 py-3 px-4 shadow-sm flex items-center justify-center gap-3 transition disabled:opacity-60 cursor-pointer text-white'>
+
+            <button
+              onClick={() => setIsOpen(true)}
+              className="w-full bg-black hover:bg-neutral-900 duration-200 border rounded-4xl text-lg border-gray-800 py-3 px-4 shadow-sm flex items-center justify-center gap-3 transition disabled:opacity-60 cursor-pointer text-white"
+            >
               Continue with email
             </button>
+
+            {error && (
+              <p className="text-red-500 text-sm mt-1" role="alert" aria-live="polite">
+                {error}
+              </p>
+            )}
           </div>
-        }
+        )}
       </div>
+
       <div className="mt-6 text-center">
         Already have an account?{' '}
-        <a href="/login" className="text-blue-600 ">
+        <a href="/login" className="text-blue-600">
           Sign In
         </a>
       </div>

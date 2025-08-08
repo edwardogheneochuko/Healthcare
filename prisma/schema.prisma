@@ -15,7 +15,6 @@ model User {
   firstName     String
   lastName      String
   name          String
-  password      String
   role          UserRole  @default(USER)
   email         String
   emailVerified Boolean
@@ -34,10 +33,10 @@ enum UserRole {
   ADMIN
 }
 
-model Session { 
+model Session {
   id        String   @id @default(cuid())
   expiresAt DateTime
-  token     String   
+  token     String   @unique
   createdAt DateTime
   updatedAt DateTime
   ipAddress String?
@@ -45,7 +44,6 @@ model Session {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([token])
   @@map("session")
 }
 
@@ -78,4 +76,5 @@ model Verification {
 
   @@map("verification")
 }
+
 

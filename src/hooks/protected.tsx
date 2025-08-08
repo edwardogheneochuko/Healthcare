@@ -1,18 +1,19 @@
 'use client';
 
 import { PropsWithChildren, useEffect } from 'react';
-import { redirect, useRouter } from 'next/navigation';
-import { setTokenToLocalStorage ,getTokenFromLocalStorage } from '@/utils/localstorage'; // make sure path is correct
+import { useRouter } from 'next/navigation';
+import { getTokenFromLocalStorage } from '@/utils/localstorage'; // ensure path is correct
 
-const Protected = ({ children }: PropsWithChildren ) => {
+const Protected = ({ children }: PropsWithChildren) => {
   const router = useRouter();
 
   useEffect(() => {
     const token = getTokenFromLocalStorage();
-    if (!getTokenFromLocalStorage()){
-        redirect('login')
+
+    if (!token) {
+      router.push('/login'); // Use router.push in client components
     }
-  }, []);
+  }, [router]);
 
   return <>{children}</>;
 };
