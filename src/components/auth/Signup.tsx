@@ -67,9 +67,11 @@ const SignUp: React.FC = () => {
         setError(message);
         console.error('Signup failed:', result?.error);
       }
-    } catch (err) {
-      const message =
-        (err as any)?.message || 'Something went wrong. Please try again.';
+    } catch (err: unknown) {
+      let message = 'Something went wrong. Please try again.';
+      if (err instanceof Error) {
+        message = err.message;
+      }
       toast.error('Error', { description: message });
       setError(message);
       console.error('Unexpected signup error:', err);
@@ -88,9 +90,11 @@ const SignUp: React.FC = () => {
       console.log('User signed up via Google:', result.user);
       toast.success('Signed in with Google');
       router.push('/dashboard');
-    } catch (err: any) {
-      const message =
-        err?.message || 'Google signup failed. Please try again or use email.';
+    } catch (err: unknown) {
+      let message = 'Google signup failed. Please try again or use email.';
+      if (err instanceof Error) {
+        message = err.message;
+      }
       setError(message);
       toast.error('Google signup failed', { description: message });
       console.error('Google signup error:', err);
@@ -202,7 +206,11 @@ const SignUp: React.FC = () => {
             )}
 
             {error && (
-              <p className="text-red-500 text-sm mt-1" role="alert" aria-live="polite">
+              <p
+                className="text-red-500 text-sm mt-1"
+                role="alert"
+                aria-live="polite"
+              >
                 {error}
               </p>
             )}
@@ -275,7 +283,11 @@ const SignUp: React.FC = () => {
             </button>
 
             {error && (
-              <p className="text-red-500 text-sm mt-1" role="alert" aria-live="polite">
+              <p
+                className="text-red-500 text-sm mt-1"
+                role="alert"
+                aria-live="polite"
+              >
                 {error}
               </p>
             )}

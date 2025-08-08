@@ -1,13 +1,11 @@
-
 import AuthLayout from '@/src/components/Layout/AuthLayout'
-import React from 'react'
+import Dashboard from '@/app/(protected)/dashboard/page'
+import Protected from '@/src/hooks/protected'
 
-const page = () => {
+export default function Page() {
   return (
     <AuthLayout>
-      page
+        <Dashboard />
     </AuthLayout>
   )
 }
-
-export default page

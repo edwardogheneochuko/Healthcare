@@ -43,9 +43,13 @@ const Login = () => {
       // TODO: Call your login API here
       toast.success('Logged in successfully!');
       router.push('/dashboard');
-    } catch (error) {
-      toast.error('Login failed', { description: 'Something went wrong.' });
-      console.error(error);
+    } catch (err: unknown) {
+      let message = 'Something went wrong. Please try again.';
+      if (err instanceof Error) {
+        message = err.message;
+      }
+      toast.error('Login failed', { description: message });
+      console.error(err);
     }
   }
 
@@ -59,14 +63,20 @@ const Login = () => {
       console.log('User signed in:', result.user);
       toast.success('Welcome!', { description: `Hello ${result.user.displayName}` });
       router.push('/dashboard');
-    } catch (error: any) {
-      if (error.code === 'auth/popup-closed-by-user') {
-        toast.error('Google sign-in cancelled.');
-      } else if (error.code === 'auth/cancelled-popup-request') {
-        console.warn('Sign-in popup request cancelled.');
+    } catch (err: unknown) {
+      if (err instanceof Error && 'code' in err) {
+        const errorCode = (err as { code?: string }).code;
+        if (errorCode === 'auth/popup-closed-by-user') {
+          toast.error('Google sign-in cancelled.');
+        } else if (errorCode === 'auth/cancelled-popup-request') {
+          console.warn('Sign-in popup request cancelled.');
+        } else {
+          toast.error('Google sign-in failed.');
+          console.error('Error signing in with Google:', err);
+        }
       } else {
         toast.error('Google sign-in failed.');
-        console.error('Error signing in with Google:', error);
+        console.error('Unknown error during Google sign-in:', err);
       }
     } finally {
       setLoading(false);
@@ -140,7 +150,7 @@ const Login = () => {
 
         {/* Sign up link */}
         <div className="text-center text-gray-50">
-          I don't have an account?{' '}
+          I don&apos;t have an account?{' '}
           <Link href="/signup" className="text-blue-400 font-medium cursor-pointer">
             Sign Up
           </Link>
