@@ -1,18 +1,16 @@
-'use client'
 
+import React, {PropsWithChildren} from 'react'
 import Protected from '@/src/hooks/protected'
-import React, { ReactNode } from 'react'
 
-interface LayoutProps {
-  children: ReactNode
-}
 
-export default function AuthLayout({ children }: LayoutProps) {
+const AuthLayout = ({children}: PropsWithChildren) => {
   return (
-    <div>
+    <>
       <Protected>
-        {children}
+         {children}
       </Protected>
-    </div>
+    </>
   )
 }
+
+export default AuthLayout

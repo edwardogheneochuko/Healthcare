@@ -239,7 +239,9 @@ const SignUp: React.FC = () => {
             <button
               onClick={GoogleSignup}
               disabled={loading}
-              className="w-full bg-neutral-200 hover:bg-white duration-200 text-black border rounded-4xl text-lg border-gray-300 py-3 px-4 shadow-sm flex items-center justify-center gap-3 transition disabled:opacity-60"
+              className="w-full bg-neutral-200 hover:bg-white duration-200 text-black cursor-pointer
+               border rounded-4xl text-lg border-gray-300 py-3 px-4 shadow-sm flex items-center 
+               justify-center gap-3 transition disabled:opacity-60"
             >
               {/* Google SVG */}
               <svg

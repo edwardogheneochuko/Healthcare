@@ -1,11 +1,13 @@
-import AuthLayout from '@/src/components/Layout/AuthLayout'
-import Dashboard from '@/app/(protected)/dashboard/page'
-import Protected from '@/src/hooks/protected'
 
-export default function Page() {
+import React from 'react'
+import Dashboard from '@/app/(protected)/dashboard/page'
+import AuthLayout from "@/src/components/Layout/AuthLayout"
+
+
+export default function page() {
   return (
     <AuthLayout>
-        <Dashboard />
+      <Dashboard />
     </AuthLayout>
   )
 }
