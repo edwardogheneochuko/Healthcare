@@ -1,13 +1,26 @@
+'use client';
 
-import React from 'react'
-import Dashboard from '@/app/(protected)/dashboard/page'
-import AuthLayout from "@/src/components/Layout/AuthLayout"
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useSession } from '@/lib/auth-client';
 
+export default function HomePage() {
+  const { data: session, isLoading } = useSession();
+  const router = useRouter();
 
-export default function page() {
+  useEffect(() => {
+    if (!isLoading) {
+      if (session) {
+        router.replace('/dashboard');
+      } else {
+        router.replace('/login');
+      }
+    }
+  }, [session, isLoading, router]);
+
   return (
-    <AuthLayout>
-      <Dashboard />
-    </AuthLayout>
-  )
+    <div className="flex h-screen items-center justify-center">
+      Redirecting...
+    </div>
+  );
 }

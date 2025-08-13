@@ -1,32 +1,10 @@
-'use client'
+'use client';
 
-import React, { useEffect } from 'react'
-import { auth } from '@/utils/firebase'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { useRouter } from 'next/navigation'
-
-const Page = () => {
-  const router = useRouter()
-  const [user, loading] = useAuthState(auth)
-
-  
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/login')
-    }
-  }, [user, loading, router])
-
-  if (loading) return <h1>Loading...</h1>
-
+export default function DashboardPage() {
   return (
-    <div>
-      Dashboard
-      {user && (
-        <p>Welcome, {user.displayName || user.email}</p>
-      )}
-      <button onClick={() => auth.signOut()}>Sign out</button>
+    <div className="p-8 text-white">
+      <h1 className="text-3xl font-bold mb-4">Dashboard</h1>
+      <p>Welcome to your dashboard!</p>
     </div>
-  )
+  );
 }
-
-export default Page
