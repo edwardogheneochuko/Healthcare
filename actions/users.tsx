@@ -1,11 +1,9 @@
 'use server';
 
 import { auth } from "@/lib/auth";
-import { RegisterFormValues } from "@/src/components/auth/Signup";
-
+import { RegisterFormValues } from "@/src/auth/Signup";
 
 export async function registerUser(data: RegisterFormValues) {
-  
   try {
     await auth.api.signUpEmail({
       body: {

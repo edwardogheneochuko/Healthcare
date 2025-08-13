@@ -5,18 +5,16 @@ import { useRouter } from 'next/navigation';
 import { useSession } from '@/lib/auth-client';
 
 export default function HomePage() {
-  const { data: session, isLoading } = useSession();
+  const { data: session } = useSession(); // no isLoading
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoading) {
-      if (session) {
-        router.replace('/dashboard');
-      } else {
-        router.replace('/login');
-      }
+    if (session) {
+      router.replace('/dashboard'); // logged in
+    } else {
+      router.replace('/login'); // not logged in
     }
-  }, [session, isLoading, router]);
+  }, [session, router]);
 
   return (
     <div className="flex h-screen items-center justify-center">
