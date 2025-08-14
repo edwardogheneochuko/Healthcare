@@ -1,5 +1,5 @@
 import React from 'react'
-import ForgotPassword from '@/src/components/auth/Forgot-password'
+import ForgotPassword from '@/src/auth/Forgot-password'
 
 
 const page = () => {

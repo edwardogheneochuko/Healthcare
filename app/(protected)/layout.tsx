@@ -2,30 +2,28 @@
 
 import { useSession, signOut } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
-import { PropsWithChildren, useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 import Sidebar from '@/src/Layout/Sidebar';
+import Loader from '@/src/global/Loader';
 
 export default function ProtectedLayout({ children }: PropsWithChildren) {
-  const { data: session, isLoading } = useSession();
+  const { data: session, isPending } = useSession();
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!isLoading) {
-      if (!session) {
-        router.replace('/login');
-      } else {
-        setLoading(false);
-      }
+    if (!isPending && !session) {
+      router.replace('/login');
     }
-  }, [session, isLoading, router]);
+  }, [session, isPending, router]);
 
-  if (loading) return <div className="flex h-screen items-center justify-center">Loading...</div>;
+  if (isPending || !session) {
+    return <><Loader /></>;
+  }
 
   return (
     <>
       <Sidebar
-        userName={session?.user?.name || 'Guest'}
+        userName={session.user?.name || 'Guest'}
         onLogout={async () => {
           await signOut();
           router.replace('/login');
