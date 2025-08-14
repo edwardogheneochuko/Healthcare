@@ -168,7 +168,8 @@ const SignUp = () => {
       <Gym />
       <div>
         {isOpen ?
-          <form onSubmit={form.handleSubmit(onSubmit)} className='text-lg space-y-3'>
+          <form onSubmit={form.handleSubmit(onSubmit)} 
+          className='text-lg space-y-3'>
             <label>FirstName</label>
             <input
               type="text"
@@ -199,7 +200,8 @@ const SignUp = () => {
             <label>Password</label>
             <PasswordInput />
             {form.formState.errors.password && (
-              <p className='text-red-500 text-sm'>{form.formState.errors.password.message}</p>
+              <p className='text-red-500 text-sm'>
+                {form.formState.errors.password.message}</p>
             )}
             <button
               type='submit'

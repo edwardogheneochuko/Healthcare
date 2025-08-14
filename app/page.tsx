@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from '@/lib/auth-client';
+import Loader from '@/src/global/Loader';
 
 export default function HomePage() {
   const { data: session } = useSession(); // no isLoading
@@ -18,7 +19,8 @@ export default function HomePage() {
 
   return (
     <div className="flex h-screen items-center justify-center">
-      Redirecting...
+      <Loader />
     </div>
   );
 }
+
