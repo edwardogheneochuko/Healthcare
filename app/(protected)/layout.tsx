@@ -16,12 +16,16 @@ export default function ProtectedLayout({ children }: PropsWithChildren) {
     }
   }, [session, isPending, router]);
 
-  if (isPending || !session) {
-    return <><Loader /></>;
+  if (isPending) {
+    return <Loader />;
+  }
+
+  if (!session) {
+    return null; // redirect will trigger
   }
 
   return (
-    <>
+    <div className="flex">
       <Sidebar
         userName={session.user?.name || 'Guest'}
         onLogout={async () => {
@@ -29,7 +33,7 @@ export default function ProtectedLayout({ children }: PropsWithChildren) {
           router.replace('/login');
         }}
       />
-      {children}
-    </>
+      <main className="flex-1">{children}</main>
+    </div>
   );
 }

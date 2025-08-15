@@ -1,39 +1,38 @@
-
 "use client";
 
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { OrbitControls, Html, useProgress } from "@react-three/drei";
-import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { OrbitControls, Html, useProgress, useFBX } from "@react-three/drei";
 import { Suspense, useRef } from "react";
 import * as THREE from "three";
 
 function LoaderFallback() {
   const { progress } = useProgress();
   return (
-    <Html center className="text-white text-lg font-bold">
-      {progress.toFixed(0)}% Loaded
+    <Html center>
+      <div className="px-4 py-2 bg-black/70 rounded-lg text-white font-bold text-lg">
+        {progress.toFixed(0)}% Loaded
+      </div>
     </Html>
   );
 }
 
 function RotatingDumbbell() {
-    const ref = useRef<THREE.Object3D>(null);
-    const fbx = useLoader(FBXLoader, "/Dumbbelle 7kg.fbx") as THREE.Object3D;
-  
-    useFrame(({ clock }) => {
-      if (ref.current) {
-        // Rotation
-        ref.current.rotation.x += 0.01;
-        ref.current.rotation.y += 0.01;
-  
-        // Bobbing
-        const t = clock.getElapsedTime();
-        ref.current.position.y = Math.sin(t * 2) * 0.2;
-      }
-    });
-  
-    return <primitive ref={ref} object={fbx} scale={[0.02, 0.02, 0.02]} />;
-  }
+  const ref = useRef<THREE.Object3D>(null);
+  const fbx = useFBX("/Dumbbelle 7kg.fbx"); // ✅ Loads from public folder
+
+  useFrame((state, delta) => {
+    if (ref.current) {
+      // Smooth rotation
+      ref.current.rotation.x += delta * 0.8;
+      ref.current.rotation.y += delta * 0.8;
+
+      // Bobbing effect
+      ref.current.position.y = Math.sin(state.clock.getElapsedTime() * 2) * 0.2;
+    }
+  });
+
+  return <primitive ref={ref} object={fbx} scale={[0.02, 0.02, 0.02]} />;
+}
 
 export default function Loader() {
   return (
