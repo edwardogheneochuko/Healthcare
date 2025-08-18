@@ -3,13 +3,14 @@
 import React, { useState } from 'react';
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '@/utils/firebase';
+// import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+// import { auth } from '@/utils/firebase';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Gym from '../global/Gym';
 import { useRouter } from 'next/navigation';
 import { toast } from "sonner";
 import { registerUser } from '@/actions/users';
+import Socials from '../global/Socials';
 
 const registerSchema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
@@ -63,22 +64,22 @@ const SignUp = () => {
     }
   };
 
-  const GoogleSignup = async () => {
-    setError('');
-    setLoading(true);
-    toast.success("Processing your request...");
+  // const GoogleSignup = async () => {
+  //   setError('');
+  //   setLoading(true);
+  //   toast.success("Processing your request...");
 
-    try {
-      const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
-      console.log('User signed up:', result.user);
-      router.push('/dashboard');
-    } catch {
-      setError('Google signup failed.',);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //   try {
+  //     const provider = new GoogleAuthProvider();
+  //     const result = await signInWithPopup(auth, provider);
+  //     console.log('User signed up:', result.user);
+  //     router.push('/dashboard');
+  //   } catch {
+  //     setError('Google signup failed.',);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const PasswordInput = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -100,6 +101,7 @@ const SignUp = () => {
       </div>
     );
   };
+
 
   return (
     <div className='text-white'>
@@ -136,13 +138,14 @@ const SignUp = () => {
         ) : (
           <div className='flex flex-col gap-4 mt-3'>
             <h1 className="text-2xl font-bold mb-2 text-left">Sign up</h1>
-            <button
+            <Socials />
+            {/* <button
               onClick={GoogleSignup}
               disabled={loading}
               className="w-full bg-neutral-200 hover:bg-white duration-200 text-black border rounded-4xl text-lg border-gray-300 py-3 px-4 shadow-sm flex items-center justify-center gap-3 transition disabled:opacity-60 cursor-pointer"
             >
               {loading ? 'Processing...' : 'Sign up with Google'}
-            </button>
+            </button> */}
             {error && <p className="text-red-500 text-sm">{error}</p>}
             <div className='flex items-center gap-4'>
               <span className='flex-1 h-px bg-gray-300'></span>

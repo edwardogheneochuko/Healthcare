@@ -2,14 +2,16 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '@/utils/firebase';
+// import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+// import { auth } from '@/utils/firebase';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { toast } from 'sonner';
 import Gym from '../global/Gym';
+import Socials from '../global/Socials';
+
 
 // Zod schema for validation
 const loginSchema = z.object({
@@ -25,7 +27,7 @@ const inputStyles =
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const googleProvider = new GoogleAuthProvider();
+ // const googleProvider = new GoogleAuthProvider();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -47,35 +49,34 @@ const Login = () => {
   }
 
   // Google login
-  const GoogleLogin = async () => {
-    if (typeof window === "undefined") return; // prevent SSR issues
-    if (loading) return;
+  // const GoogleLogin = async () => {
+  //   if (typeof window === "undefined") return; // prevent SSR issues
+  //   if (loading) return;
   
-    setLoading(true);
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      toast.success('Welcome!', { description: `Hello ${result.user.displayName}` });
-      router.push('/dashboard');
-    } catch (err) {
-      console.error(err);
-      toast.error('Google sign-in failed.');
-    } finally {
-      setLoading(false);
-    }
-  };
+  //   setLoading(true);
+  //   try {
+  //     const result = await signInWithPopup(auth, googleProvider);
+  //     toast.success('Welcome!', { description: `Hello ${result.user.displayName}` });
+  //     router.push('/dashboard');
+  //   } catch (err) {
+  //     console.error(err);
+  //     toast.error('Google sign-in failed.');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   
-
   return (
     <div>
       <Gym />
       <div className="flex flex-col gap-4">
         <h2 className="text-left font-bold text-white text-2xl py-2">Log in</h2>
-
-        <button
+          <Socials />
+        {/* <button
           onClick={GoogleLogin}
           disabled={loading}
-          className="w-full bg-neutral-200 hover:bg-white text-black border rounded-4xl text-lg py-3 px-4 shadow-sm flex items-center justify-center gap-3 disabled:opacity-60"
-        >
+          className="w-full bg-neutral-200 hover:bg-white text-black border rounded-4xl
+           text-lg py-3 px-4 shadow-sm flex items-center justify-center gap-3 disabled:opacity-60">
           <svg className="w-5 h-5" viewBox="0 0 488 512">
             <path fill="#EA4335" d="M488 261.8c0-17.4-1.5-34.1-4.3-50.3H249v95.2h135.6c-5.8 31.4-23 58-48.9 75.9v62.9h78.9c46.2-42.6 73.4-105.4 73.4-183.7z"/>
             <path fill="#34A853" d="M249 492c65.7 0 120.7-21.7 160.9-59.1l-78.9-62.9c-21.9 14.6-50 23.2-82 23.2-62.9 0-116.2-42.5-135.2-99.6H32.9v62.6C73.6 439.2 155.4 492 249 492z"/>
@@ -83,8 +84,8 @@ const Login = () => {
             <path fill="#FBBC05" d="M249 97.6c35.8 0 67.9 12.3 93.3 36.4l70.1-70.1C369.6 25.6 314.7 0 249 0 155.4 0 73.6 52.8 32.9 110.9l80.9 62.6c19-57.1 72.3-99.6 135.2-99.6z"/>
           </svg>
           {loading ? 'Signing in...' : 'Sign in with Google'}
-        </button>
-
+        </button> */}
+  
         <div className="flex items-center gap-4">
           <span className="flex-1 h-px bg-gray-300"></span>
           <span className="text-gray-500">or</span>
@@ -108,7 +109,8 @@ const Login = () => {
               Forgot Password
             </Link>
           </span>
-          <input type="password" {...form.register('password')} placeholder="-------" className={inputStyles} />
+          <input type="password" {...form.register('password')} placeholder="-------" 
+          className={inputStyles} />
           {form.formState.errors.password && (
             <p className="text-red-400 text-sm mt-1">{form.formState.errors.password.message}</p>
           )}
