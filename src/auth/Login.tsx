@@ -48,21 +48,22 @@ const Login = () => {
 
   // Google login
   const GoogleLogin = async () => {
+    if (typeof window === "undefined") return; // prevent SSR issues
     if (loading) return;
+  
     setLoading(true);
-
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      console.log('User signed in:', result.user);
       toast.success('Welcome!', { description: `Hello ${result.user.displayName}` });
       router.push('/dashboard');
-    } catch (err: unknown) {
-      console.error('Error signing in with Google:', err);
+    } catch (err) {
+      console.error(err);
       toast.error('Google sign-in failed.');
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <div>
