@@ -6,5 +6,11 @@ export interface SidebarItem {
     label: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     bg: string;
     hover: string;
+    border: string
 }
   
+
+export interface SidebarProps {
+    userName: string;
+    onLogout: () => void;
+}

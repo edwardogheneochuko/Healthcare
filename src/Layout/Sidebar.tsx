@@ -5,11 +5,7 @@ import { LogOut, PersonStanding, MoveRightIcon, MoveLeftIcon } from 'lucide-reac
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-
-interface SidebarProps {
-  userName: string;
-  onLogout: () => void;
-}
+import { SidebarProps } from '../types/type';
 
 export default function Sidebar({ userName, onLogout }: SidebarProps) {
   const pathname = usePathname();
@@ -19,8 +15,8 @@ export default function Sidebar({ userName, onLogout }: SidebarProps) {
 
   return (
     <aside
-      className={`${open ? 'w-64' : 'w-20'} duration-300
-      relative h-screen bg-black text-white flex flex-col`}
+      className={`${open ? 'w-64' : 'w-20'} duration-300 hidden sm:flex flex-col
+      relative h-screen bg-black text-white `}
     >
       {/* Toggle button at edge of bg */}
       <span
@@ -46,15 +42,12 @@ export default function Sidebar({ userName, onLogout }: SidebarProps) {
           <Link
             key={id}
             href={path}
-            className={`text-2xl font-medium tracking-wide flex items-center gap-x-2 ${
-              pathname === path ? 'text-yellow-400' : ''
-            }`}
-          >
+            className={`text-2xl font-medium tracking-wide flex items-center gap-x-2 ${hover} p-1
+              rounded-md duration-200  ${pathname === path ? 'text-yellow-400' : ''}`}>
             <p
               title={title}
-              className={`border p-1 rounded-md ${bg} ${hover} transition-transform duration-200 cursor-pointer
-                hover:scale-110 hover:rotate-180`}
-            >
+              className={`border p-1 rounded-md transition-transform duration-200 cursor-pointer
+                hover:scale-110 hover:rotate-180 ${open ? '' :  `${bg}`}`}>
               <Icon className="w-7 h-7" />
             </p>
             {open && title}

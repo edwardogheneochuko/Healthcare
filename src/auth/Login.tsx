@@ -35,6 +35,7 @@ const Login = () => {
   // Email/password login
   async function onSubmit(values: LoginFormValues) {
     try {
+      console.log("Login attempt with:", values);
       toast.success('Logged in successfully!');
       router.push('/dashboard');
     } catch (err: unknown) {

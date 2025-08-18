@@ -31,7 +31,7 @@ export default function ForgotPassword() {
 
           <div className="mt-6 space-y-3 text-center">
             <p className="text-sm text-gray-500">
-              We'll send you a link to reset your password.
+            Don&apos;t worry, we&apos;ll help you reset your password.
             </p>
             <p className="text-center text-sm ">
               Remembered your password?
