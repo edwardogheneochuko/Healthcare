@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 // import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 // import { auth } from '@/utils/firebase';
@@ -25,14 +25,14 @@ const inputStyles =
   'border-2 border-gray-400 w-full h-14 rounded-md placeholder:text-gray-400 placeholder:tracking-widest px-3 mt-2 text-white focus:outline-none focus:border-blue-400 transition';
 
 const Login = () => {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const router = useRouter();
  // const googleProvider = new GoogleAuthProvider();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: '', password: '' },
-  });
+  }); 
 
   // Email/password login
   async function onSubmit(values: LoginFormValues) {
@@ -124,7 +124,7 @@ const Login = () => {
         <div className="text-center text-gray-50">
           I don&apos;t have an account?{' '}
           <Link href="/signup" className="text-blue-400 font-medium cursor-pointer">
-            Sign Up
+            Sign Up 
           </Link>
         </div>
       </form>

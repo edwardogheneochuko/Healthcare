@@ -29,9 +29,9 @@ const inputStyles = 'border-2 border-gray-400 w-full h-14 rounded-md placeholder
 
 const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [error, setError] = useState('');
+  const [error] = useState('');
   const router = useRouter();
 
   const form = useForm<RegisterFormValues>({
