@@ -1,12 +1,12 @@
 
 import React from 'react'
 
-const Dashboard = () => {
+const page = () => {
   return (
     <div>
-      Dashboard
+      Family
     </div>
   )
 }
 
-export default Dashboard
+export default page
