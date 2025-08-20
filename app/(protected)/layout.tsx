@@ -4,25 +4,29 @@ import { PropsWithChildren, } from 'react';
 import Sidebar from '@/src/Layout/Sidebar';
 import BottomBar from '@/src/Layout/BottomBar';
 import Header from '@/src/Layout/Header';
+import backgroundImg from '@/public/SpinBackground.jpg'
 
-
-export default function ProtectedLayout({ children }: PropsWithChildren) {
+export default function ProtectedLayout({ children }: PropsWithChildren) { 
  return (
   <div className="flex h-screen">
     <Sidebar userName="Guest" />
-    <main className="flex-1 flex flex-col px-2">
+    <main className="flex-1 flex flex-col">
       {/* Header fixed at the top */}
       <div className="sticky top-0 z-10">
         <Header />
       </div>
 
       {/* Scrollable content */}
-      <div className="flex-1 overflow-auto ">
+      <div className="flex-1 overflow-auto" 
+      style={{
+        backgroundImage: `url(${backgroundImg.src})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',}}>
         {children}
       </div>
 
       {/* Bottom bar at the bottom */}
-      <BottomBar />
+      <BottomBar/>
     </main>
   </div>
 );
@@ -39,6 +43,7 @@ export default function ProtectedLayout({ children }: PropsWithChildren) {
 // import Dashboard from '@/src/Layout/Dashboard';
 // import Header from '@/src/Layout/Header';
 // import BottomBar from '@/src/Layout/BottomBar';
+// import backgroundImg from '@/public/SpinBackground.jpg'
 
 
 // export default function ProtectedLayout({ children }: PropsWithChildren) {
@@ -68,7 +73,11 @@ export default function ProtectedLayout({ children }: PropsWithChildren) {
 //           router.replace('/login');
 //         }}
 //       />
-//       <main className="flex-1 flex flex-col px-2">
+//       <main className="flex-1 flex flex-col px-2"
+//         style={{
+//           backgroundImage: `url(${backgroundImg.src})`,
+//           backgroundSize: 'cover',
+//           backgroundPosition: 'center',}}>
 //        <div className="sticky top-0 z-10">
 //             <Header />
 //          </div>

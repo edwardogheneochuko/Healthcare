@@ -15,21 +15,19 @@ export default function Sidebar({ userName, onLogout }: SidebarProps) {
   return (
     <aside
       className={`${open ? 'w-56' : 'w-16'} duration-300 hidden sm:flex flex-col
-      relative h-screen bg-white text-gray-800 shadow-lg border-r`}
-    >
+      relative h-screen bg-black text-gray-50 shadow-lg border-r`}>
       {/* Toggle Button */}
       <span
         onClick={toggleButton}
         className="absolute top-5 right-0 rounded-l-full p-2 bg-neutral-700
                    text-white cursor-pointer hover:bg-neutral-900 shadow-md transition"
-        title={open ? 'Collapse' : 'Expand'}
-      >
+        title={open ? 'Collapse' : 'Expand'}>
         {open ? <ArrowBigLeft className="w-5 h-5" /> : <ArrowBigRight className="w-5 h-5" />}
       </span>
 
       {/* Logo */}
       <div className="mb-6 border-b border-gray-200 pb-3 pt-5 flex justify-center">
-        {open && <p className="text-xl font-bold tracking-wider text-gray-800">
+        {open && <p className="text-xl font-bold tracking-wider text-green-200">
           HealthCare
           </p>}
       </div>
@@ -43,9 +41,8 @@ export default function Sidebar({ userName, onLogout }: SidebarProps) {
               key={id}
               href={path}
               className={`flex items-center gap-3 p-3 rounded-lg transition-all duration-200
-                ${active ? 'bg-green-100 text-green-400  shadow-sm' : 'hover:bg-gray-100 text-gray-700'}
-              `}
-            >
+                ${active ? 'bg-neutral-800 text-green-50  shadow-sm' : 'hover:bg-gray-100 text-gray-500'}
+              `}>
               <Icon className="w-6 h-6" />
               {open && <span className="text-sm">{title}</span>}
             </Link>

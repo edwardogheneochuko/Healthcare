@@ -12,11 +12,11 @@ const BottomBar = () => {
 
   return (
     <>
-      {/* Floating toggle button */}
+      {/* Floating toggle button (unchanged) */}
       <button
         onClick={toggleMenu}
-        className='border-2 border-gray-700 p-2 fixed bottom-6 right-6 z-50 text-gray-300
-        rounded-3xl bg-neutral-900 hover:bg-neutral-800 cursor-pointer sm:hidden'
+        className='border-2 border-gray-700 p-2 fixed bottom-6 right-6 z-50
+        text-gray-300 rounded-3xl bg-neutral-900 hover:bg-neutral-800 cursor-pointer sm:hidden'
         aria-label="Toggle Menu">
         {open ? <XIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
       </button>
@@ -25,19 +25,25 @@ const BottomBar = () => {
       <div
         className={`fixed bottom-0 left-0 w-full sm:hidden z-40 transition-transform duration-300
                     ${open ? 'translate-y-0' : 'translate-y-full'}`}>
-        <div className="mx-4 mb-6 bg-white/95 backdrop-blur-lg rounded-3xl shadow-xl py-4 px-6">
+        <div className="mx-4 mb-6 bg-neutral-900/80 backdrop-blur-xl border border-gray-800
+                        rounded-3xl shadow-2xl py-5 px-6">
           <div className="grid grid-cols-3 gap-4">
-            {sideBar.map(({ id, title, path, label: Icon }) => (
-              <Link
-                key={id}
-                href={path}
-                className={`flex flex-col items-center justify-center gap-1 text-sm font-medium p-3
-                           rounded-2xl transition-all duration-200
-                           ${pathname === path ? 'bg-green-100 text-green-600' : 'text-gray-700 hover:bg-gray-100'}`}>
-                <Icon className="w-6 h-6" />
-                <span>{title}</span>
-              </Link>
-            ))}
+            {sideBar.map(({ id, title, path, label: Icon }) => {
+              const isActive = pathname === path;
+              return (
+                <Link
+                  key={id}
+                  href={path}
+                  className={`flex flex-col items-center justify-center gap-1 text-xs font-medium p-3
+                             rounded-2xl transition-all duration-300 ease-in-out
+                             ${isActive 
+                               ? 'bg-green-600/20 text-green-400 shadow-md scale-105' 
+                               : 'text-gray-300 hover:text-white hover:bg-gray-800/70 hover:scale-105'}`}>
+                  <Icon className={`w-6 h-6 ${isActive ? 'text-green-400' : ''}`} />
+                  <span>{title}</span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>
