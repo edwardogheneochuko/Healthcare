@@ -38,11 +38,10 @@ export default function Sidebar({ userName, onLogout }: SidebarProps) {
           const active = pathname === path;
           return (
             <Link
-              key={id}
-              href={path}
+              key={id} href={path}
               className={`flex items-center gap-3 p-3 rounded-lg transition-all duration-200
-                ${active ? 'bg-neutral-800 text-green-50  shadow-sm' : 'hover:bg-gray-100 text-gray-500'}
-              `}>
+                ${active ? 'bg-neutral-800 text-green-50  shadow-sm' : 
+                  'hover:bg-gray-500 text-green-300'}`}>
               <Icon className="w-6 h-6" />
               {open && <span className="text-sm">{title}</span>}
             </Link>
