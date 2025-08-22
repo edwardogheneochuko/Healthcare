@@ -5,6 +5,7 @@ import Sidebar from '@/src/Layout/Sidebar';
 import BottomBar from '@/src/Layout/BottomBar';
 import Header from '@/src/Layout/Header';
 import backgroundImg from '@/public/SpinBackground.jpg'
+import RightLayout from '@/src/Layout/RightLayout';
 
 export default function ProtectedLayout({ children }: PropsWithChildren) { 
  return (
@@ -17,12 +18,17 @@ export default function ProtectedLayout({ children }: PropsWithChildren) {
       </div>
 
       {/* Scrollable content */}
-      <div className="flex-1 overflow-auto" 
+      <div className="flex-1 overflow-auto grid lg:grid-cols-4 gap-6 p-5" 
       style={{
         backgroundImage: `url(${backgroundImg.src})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',}}>
-        {children}
+          <div className='col-span-3'>
+             {children}
+          </div>
+          <div className='col-span-1 lg:border-l-neutral-800 lg:border-l'>
+            <RightLayout />
+          </div>
       </div>
 
       {/* Bottom bar at the bottom */}
@@ -30,7 +36,6 @@ export default function ProtectedLayout({ children }: PropsWithChildren) {
     </main>
   </div>
 );
-
 
 
 // 'use client';
@@ -44,6 +49,7 @@ export default function ProtectedLayout({ children }: PropsWithChildren) {
 // import Header from '@/src/Layout/Header';
 // import BottomBar from '@/src/Layout/BottomBar';
 // import backgroundImg from '@/public/SpinBackground.jpg'
+// import RightLayout from '@/src/Layout/RightLayout';
 
 
 // export default function ProtectedLayout({ children }: PropsWithChildren) {
@@ -73,19 +79,26 @@ export default function ProtectedLayout({ children }: PropsWithChildren) {
 //           router.replace('/login');
 //         }}
 //       />
-//       <main className="flex-1 flex flex-col px-2"
+//      <div className="flex-1 flex flex-col">
+//        <div className="sticky top-0 z-10">
+//             <Header />
+//          </div>
+//         {/* Scrollable content */}
+//       <main className="flex-1 overflow-auto grid lg:grid-cols-3 gap-6 p-5"
 //         style={{
 //           backgroundImage: `url(${backgroundImg.src})`,
 //           backgroundSize: 'cover',
 //           backgroundPosition: 'center',}}>
-//        <div className="sticky top-0 z-10">
-//             <Header />
+//          <div className="col-span-2">
+//          {children}
 //          </div>
-//        <div className="flex-1 overflow-auto px-2">
-//        {children}
-//        </div>
-//        <BottomBar />
-//       </main>
+//         <div className='col-span-1 lg:border-l-neutral-800 lg:border-l'>
+//             <RightLayout />
+//          </div>
+//        </main>
+           {/* Bottom bar at the bottom */}
+//       <BottomBar />
+//      </div>
 //     </div>
 //   );
 }
