@@ -1,38 +1,60 @@
 
 import React from 'react'
 
-// Hospitalization (inpatient care) room charges, medicines, surgery
-// outpatient care doctor visits, lab tests
-// maternity and new born (sometimes after a waiting period)
-// children healthcare - vaccinations, pediatric checkups
-// preventive checkups - annual health screenings
-// emergency care - ambulance, urgent treatments
-// optional add-ons - dental, vision, mental health, chronic illness management 
 
-import hospital from '@/public/hospital.jpg'
+import hospital from '@/public/medicine.jpg'
 import care from '@/public/care.jpg'
 import Image from "next/image";
 
 const Plan = () => {
   return (
-    <div>
-      {/* <h1 className='text-gray-300 text-xs font-bold font-mono'>
+    <>
+      <h1 className="text-gray-300 text-xs font-bold font-mono">
         SINGLE OR FAMILY HEALTH PLANS
       </h1>
-      <div className='flex mt-5 gap-5'>
-        <div>
-            <Image src={hospital}
+      <div className="flex gap-5 mt-5">
+        {/* Card 1 */}
+        <div className="relative w-1/2 h-64">
+          <Image
+            src={hospital}
             alt="Hospital"
-            className="rounded-lg object-cover" />
+            fill
+            className="rounded-lg object-cover brightness-75"
+          />
+          {/* Top Text */}
+          <div className="absolute top-3 left-3 text-white font-bold">
+            <h1 className="md:text-lg tracking-wider">Hospitalization</h1>
+            <h2 className="text-sm md:text-base text-fuchsia-300 font-semibold">
+              ( inpatient care )
+            </h2>
+          </div>
+          <div className="absolute bottom-3 left-3 right-3">
+            {/* something to be here */}
+          </div>
         </div>
-        <div>
-        <Image src={care}
-            alt="Hospital"
-            className="rounded-lg object-cover" />
-        </div>
-      </div> */}
-    </div>
-  )
-}
 
-export default Plan
+        {/* Card 2 */}
+        <div className="relative w-1/2 h-64">
+          <Image
+            src={care}
+            alt="Care"
+            fill
+            className="rounded-lg object-cover brightness-75"
+          />
+          {/* Top Text */}
+          <div className="absolute top-3 left-3 text-white font-bold">
+            <h1 className="md:text-lg">Doctor Visit, Lab Tests</h1>
+            <h2 className="text-sm md:text-base text-fuchsia-300 font-semibold">
+              ( outpatient care )
+            </h2>
+          </div>
+          <div className="absolute bottom-3 left-3 right-3">
+             {/* Something here */}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default Plan;

@@ -27,7 +27,7 @@ export default function Sidebar({ userName, onLogout }: SidebarProps) {
 
       {/* Logo */}
       <div className="mb-6 border-b border-gray-200 pb-3 pt-5 flex justify-center">
-        {open && <p className="text-xl font-bold tracking-wider text-green-200">
+        {open && <p className="text-xl tracking-wider text-green-200 font-extrabold">
           HealthCare
           </p>}
       </div>
@@ -39,7 +39,8 @@ export default function Sidebar({ userName, onLogout }: SidebarProps) {
           return (
             <Link
               key={id} href={path}
-              className={`flex items-center gap-3 p-3 rounded-lg transition-all duration-200
+              className={`flex items-center gap-3 p-3 rounded-lg 
+                transition-all duration-200 font-semibold border-b
                 ${active ? 'bg-neutral-800 text-green-50  shadow-sm' : 
                   'hover:bg-gray-500 text-green-300'}`}>
               <Icon className="w-6 h-6" />
