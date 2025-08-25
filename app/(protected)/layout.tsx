@@ -35,8 +35,8 @@ export default function ProtectedLayout({ children }: PropsWithChildren) {
           </div>
 
           {/* Right Sidebar (Goals + Activity) */}
-          <aside className="col-span-1 border-l border-gray-800 pl-4 space-y-4">
-            <div className="pb-3 border-b border-gray-800">
+          <aside className="col-span-1 md:border-l border-gray-800 pl-4 space-y-4">
+            <div className="pb-3 md:border-b border-gray-800">
               <Goals />
             </div>
             <Activity />

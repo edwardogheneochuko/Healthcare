@@ -5,18 +5,17 @@ import {
     MenuIcon,
     CrossIcon,
     AmbulanceIcon,
-    UsersIcon,
     SyringeIcon,
   } from "lucide-react";
   
   export const sideBar: SidebarItem[] = [
     { id: 1, title: 'Home', path: '/dashboard', label: MenuIcon, bg: 'bg-green-700', hover: 'hover:bg-gray-900', border:'hover:border-gray-50'},
-    { id: 2, title: 'Diagnosis', path: '/diagnosis', label: CrossIcon, bg: 'bg-neutral-700', hover: 'hover:bg-purple-900', border:'hover:border-neutral-900' },
-    { id: 3, title: 'Medications', path: '/medications', label: SyringeIcon, bg: 'bg-blue-700', hover: 'hover:bg-red-900', border: 'hover:border-blue-900'},
+    { id: 2, title: 'Services', path: '/services', label: CrossIcon, bg: 'bg-neutral-700', hover: 'hover:bg-purple-900', border:'hover:border-neutral-900' },
+    { id: 3, title: 'Appointments', path: '/appointments', label: SyringeIcon, bg: 'bg-blue-700', hover: 'hover:bg-red-900', border: 'hover:border-blue-900'},
     { id: 4, title: 'Ambulance', path: '/ambulance', label: AmbulanceIcon ,bg: 'bg-gray-700', hover: 'hover:bg-gray-900', border: 'hover:border-gray-900'},
   ];
   
-
+  
   export const ProviderPlans: Provider[] = [
     {
       id: 1,
