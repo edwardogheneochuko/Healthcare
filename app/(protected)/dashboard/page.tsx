@@ -1,11 +1,16 @@
 'use client';
 
+import Care from '@/src/components/Dashboard/Care'
+import Others from '@/src/components/Dashboard/Others'
+import Plan from '@/src/components/Dashboard/Plan'
+
+
 export default function DashboardPage() {
   return (
-    <div className="p-8 text-white">
-      <h1 className="text-3xl font-bold mb-4">
-        Dashboard
-      </h1>
-    </div>
+    <>
+      <Plan />
+      <Care />
+      <Others /> 
+    </>
   );
 }

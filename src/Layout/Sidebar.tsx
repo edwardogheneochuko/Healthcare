@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { SidebarProps } from '../types/type';
 
+
 export default function Sidebar({ userName, onLogout }: SidebarProps) {
   const pathname = usePathname();
   const [open, setOpen] = useState<boolean>(true);
@@ -27,7 +28,8 @@ export default function Sidebar({ userName, onLogout }: SidebarProps) {
 
       {/* Logo */}
       <div className="mb-6 border-b border-gray-200 pb-3 pt-5 flex justify-center">
-        {open && <p className="text-xl tracking-wider text-green-200 font-extrabold">
+        {open && <p className="text-xl tracking-wider 
+        text-pink-400 font-extrabold">
           HealthCare
           </p>}
       </div>
@@ -41,8 +43,8 @@ export default function Sidebar({ userName, onLogout }: SidebarProps) {
               key={id} href={path}
               className={`flex items-center gap-3 p-3 rounded-lg 
                 transition-all duration-200 font-semibold border-b
-                ${active ? 'bg-neutral-800 text-green-50  shadow-sm' : 
-                  'hover:bg-gray-500 text-green-300'}`}>
+                ${active ? 'bg-neutral-800 text-pink-400  shadow-sm' : 
+                  'hover:bg-gray-500 border-green-300'}`}>
               <Icon className="w-6 h-6" />
               {open && <span className="text-sm">{title}</span>}
             </Link>
@@ -63,7 +65,8 @@ export default function Sidebar({ userName, onLogout }: SidebarProps) {
         <button
           onClick={onLogout}
           aria-label="Logout"
-          className={`p-2 rounded-md bg-red-500 hover:bg-red-600 transition text-white ${
+          className={`p-2 rounded-md bg-red-500 hover:bg-red-600 
+            transition text-white cursor-pointer ${
             open ? '' : 'w-full'
           }`}
         >

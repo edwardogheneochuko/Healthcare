@@ -14,3 +14,15 @@ export interface SidebarProps {
     userName: string;
     onLogout: () => void;
 }
+
+export interface Plan {
+    name: string;
+    price: string;
+    coverage: string[];
+}
+  
+export interface Provider {
+    id: number;
+    title: string;
+    plans: Plan[];
+}

@@ -16,20 +16,20 @@ const BottomBar = () => {
       <button
         onClick={toggleMenu}
         className='border-2 border-gray-700 p-2 fixed bottom-6 right-6 z-50
-        text-gray-300 rounded-3xl bg-neutral-900 hover:bg-neutral-800 cursor-pointer sm:hidden'
+        text-gray-400 rounded-3xl bg-neutral-900 hover:bg-neutral-800 cursor-pointer sm:hidden'
         aria-label="Toggle Menu">
         {open ? <XIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
       </button>
 
       {/* Bottom menu */}
-      <div
-        className={`fixed bottom-0 left-0 w-full sm:hidden z-40 transition-transform duration-300
+      <div className={`fixed bottom-0 left-0 w-full sm:hidden z-40 
+          transition-transform duration-300 
                     ${open ? 'translate-y-0' : 'translate-y-full'}`}>
-        <div className="mx-4 mb-6 bg-neutral-900/80 backdrop-blur-xl border border-gray-800
+        <div className="mx-4 mb-6  backdrop-blur-xl border border-neutral-500
                         rounded-3xl shadow-2xl py-5 px-6">
           <div className="grid grid-cols-3 gap-4">
-            {sideBar.map(({ id, title, path, label: Icon }) => {
-              const isActive = pathname === path;
+             {sideBar.map(({ id, title, path, label: Icon }) => {
+               const isActive = pathname === path;
               return (
                 <Link
                   key={id}

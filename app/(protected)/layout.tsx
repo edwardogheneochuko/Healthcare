@@ -1,41 +1,53 @@
 'use client';
 
-import { PropsWithChildren, } from 'react';
+import { PropsWithChildren } from 'react';
 import Sidebar from '@/src/Layout/Sidebar';
 import BottomBar from '@/src/Layout/BottomBar';
 import Header from '@/src/Layout/Header';
-import backgroundImg from '@/public/SpinBackground.jpg'
-import RightLayout from '@/src/Layout/RightLayout';
+import backgroundImg from '@/public/SpinBackground.jpg';
+import Goals from '@/src/Layout/Goals';
+import Activity from '@/src/Layout/Activity';
 
-export default function ProtectedLayout({ children }: PropsWithChildren) { 
- return (
-  <div className="flex h-screen">
-    <Sidebar userName="Guest" />
-    <main className="flex-1 flex flex-col">
-      {/* Header fixed at the top */}
-      <div className="sticky top-0 z-10">
-        <Header />
-      </div>
+export default function ProtectedLayout({ children }: PropsWithChildren) {
+  return (
+    <div className="flex h-screen">
+      {/* Left Sidebar */}
+      <Sidebar userName="Guest" />
 
-      {/* Scrollable content */}
-      <div className="flex-1 overflow-auto grid lg:grid-cols-4 gap-6 p-5" 
-      style={{
-        backgroundImage: `url(${backgroundImg.src})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',}}>
-          <div className='col-span-3'>
-             {children}
+      {/* Main Content Area */}
+      <main className="flex-1 flex flex-col relative">
+        {/* Header (fixed) */}
+        <div className="sticky top-0 z-20">
+          <Header />
+        </div>
+
+        {/* Content */}
+        <div
+          className="flex-1 overflow-auto grid lg:grid-cols-4 gap-6 p-5"
+          style={{
+            backgroundImage: `url(${backgroundImg.src})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}>
+          {/* Main page content */}
+          <div className="col-span-3 space-y-6">
+            {children}
           </div>
-          <div className='col-span-1 lg:border-l-neutral-800 lg:border-l'>
-            <RightLayout />
-          </div>
-      </div>
 
-      {/* Bottom bar at the bottom */}
-      <BottomBar/>
-    </main>
-  </div>
-);
+          {/* Right Sidebar (Goals + Activity) */}
+          <aside className="col-span-1 border-l border-gray-800 pl-4 space-y-4">
+            <div className="pb-3 border-b border-gray-800">
+              <Goals />
+            </div>
+            <Activity />
+          </aside>
+        </div>
+
+        {/* Bottom Bar */}
+          <BottomBar />
+      </main>
+    </div>
+  );
 
 
 // 'use client';
@@ -49,7 +61,9 @@ export default function ProtectedLayout({ children }: PropsWithChildren) {
 // import Header from '@/src/Layout/Header';
 // import BottomBar from '@/src/Layout/BottomBar';
 // import backgroundImg from '@/public/SpinBackground.jpg'
-// import RightLayout from '@/src/Layout/RightLayout';
+// import Goals from '@/src/Layout/Goals';
+// import Activity from '@/src/Layout/Activity';
+
 
 
 // export default function ProtectedLayout({ children }: PropsWithChildren) {
@@ -79,25 +93,28 @@ export default function ProtectedLayout({ children }: PropsWithChildren) {
 //           router.replace('/login');
 //         }}
 //       />
-//      <div className="flex-1 flex flex-col">
+//      <div className="flex-1 flex flex-col relative">
 //        <div className="sticky top-0 z-10">
 //             <Header />
 //          </div>
 //         {/* Scrollable content */}
-//       <main className="flex-1 overflow-auto grid lg:grid-cols-3 gap-6 p-5"
+//       <main className="flex-1 overflow-auto grid lg:grid-cols-4 gap-6 p-5"
 //         style={{
 //           backgroundImage: `url(${backgroundImg.src})`,
 //           backgroundSize: 'cover',
 //           backgroundPosition: 'center',}}>
-//          <div className="col-span-2">
+//          <div className="col-span-3 space-y-6">
 //          {children}
 //          </div>
-//         <div className='col-span-1 lg:border-l-neutral-800 lg:border-l'>
-//             <RightLayout />
-//          </div>
+//         <aside className='col-span-1 border-l border-gray-800 pl-4 space-y-4'>
+//             <div className='pb-3 border-b border-gray-800'>
+//              <Goals />
+//              </div>
+//             <Activity />
+//          </aside>
 //        </main>
            {/* Bottom bar at the bottom */}
-//       <BottomBar />
+//          <BottomBar />
 //      </div>
 //     </div>
 //   );
