@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+*.js linguist-generated
+*.config.js linguist-generated
+
 # production
 /build
 
