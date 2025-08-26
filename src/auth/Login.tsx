@@ -50,6 +50,7 @@ const Login = () => {
   // Password input with visibility toggle
   const PasswordInput = () => {
     const [visible, setVisible] = useState(false);
+    
     return (
       <div className="relative">
         <input
