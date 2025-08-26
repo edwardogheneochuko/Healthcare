@@ -48,3 +48,10 @@ export interface Provider {
     title: string;
     plans: Plan[];
 }
+
+export interface EmailOptions {
+    to: string;
+    subject: string;
+    html: string;
+  }
+  

@@ -1,43 +1,49 @@
+// prisma/schema.prisma
 
 generator client {
-  provider = "prisma-client-js"
-  // output   = "../lib/generated/prisma"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
   provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  url       = env("DATABASE_URL") // make sure this exists in your .env
+  directUrl = env("DIRECT_URL") // optional, only if you use direct URL
 }
 
+// Your models below
 model User {
-  id            String    @id @default(cuid())
-  firstName     String
-  lastName      String
-  name          String
-  role          UserRole  @default(USER)
-  email         String
+  id            String          @id @default(cuid())
+  role          UserRole        @default(USER)
+  email         String          @unique
   emailVerified Boolean
   image         String?
   createdAt     DateTime
   updatedAt     DateTime
+  firstName     String
+  lastName      String
+  name          String
   accounts      Account[]
   sessions      Session[]
+  resets        PasswordReset[]
 
-  @@unique([email])
   @@map("user")
 }
 
-enum UserRole {
-  USER
-  ADMIN
+model PasswordReset {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model Session { 
+model Session {
   id        String   @id @default(cuid())
   expiresAt DateTime
-  token     String   
+  token     String   @unique
   createdAt DateTime
   updatedAt DateTime
   ipAddress String?
@@ -45,7 +51,6 @@ model Session {
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([token])
   @@map("session")
 }
 
@@ -79,3 +84,7 @@ model Verification {
   @@map("verification")
 }
 
+enum UserRole {
+  USER
+  ADMIN
+}
