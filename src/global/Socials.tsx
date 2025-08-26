@@ -46,14 +46,12 @@ export default function Socials() {
         disabled={loading}
         className="w-full bg-neutral-800 hover:bg-black duration-200 text-white border rounded-4xl text-lg
          border-gray-700 py-3 px-4 shadow-sm flex items-center justify-center gap-3 transition disabled:opacity-60
-         cursor-pointer"
-      >
+         cursor-pointer">
         <svg
           className="w-5 h-5"
           fill="currentColor"
           viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+          xmlns="http://www.w3.org/2000/svg">
           <path fillRule="evenodd" clipRule="evenodd"
             d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.793-.263.793-.583 
             0-.288-.01-1.05-.015-2.06-3.338.727-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.757-1.333-1.757

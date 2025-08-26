@@ -56,17 +56,18 @@ export default function Sidebar({ userName, onLogout }: UserProps) {
       <div
         className={`mt-auto border-t border-gray-200 p-4 flex ${
           open ? 'items-center justify-between gap-3' : 'flex-col items-center gap-2'
-        }`}
-      >
-        <div className="flex items-center gap-3">
-          <PersonStanding className="w-7 h-7 p-1 rounded-full bg-gray-100 text-gray-800" />
-          {open && <span className="text-sm font-medium truncate max-w-[140px]">{userName}</span>}
+        }`}>
+        <div className="flex items-center gap-3 min-w-0 flex-1">
+          <PersonStanding className="w-7 h-7 p-1 rounded-full bg-gray-100
+           text-gray-800 shrink-0" />
+          {open && <span className="text-sm font-medium truncate max-w-[140px] block">
+            {userName}</span>}
         </div>
         <button
           onClick={onLogout}
           aria-label="Logout"
           className={`p-2 rounded-md bg-red-500 hover:bg-red-600 
-            transition text-white cursor-pointer ${
+            transition text-white cursor-pointer shrink-0 ${
             open ? '' : 'w-full'
           }`}
         >

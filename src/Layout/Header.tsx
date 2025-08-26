@@ -22,13 +22,14 @@ const Header = ({userName, onLogout }: UserProps ) => {
           <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500"></span>
         </button>
         <div className="flex sm:hidden items-center gap-2 cursor-pointer">
-          <User className="w-4 h-4  md:w-6 md:h-6 text-gray-50" />
-          <span className="text-sm md:text-base text-gray-300 font-medium">
+          <User className="w-4 h-4  md:w-6 md:h-6 text-gray-50 shrink-0" />
+          <span className="text-sm md:text-base text-gray-300 font-medium
+           max-w-[100px] md:max-w-[150px] truncate block">
             {userName}
           </span>
           <button onClick={onLogout} aria-label='Logout'
              className="p-2 rounded-md bg-red-500 hover:bg-red-600 
-            transition text-white cursor-pointer">
+            transition text-white cursor-pointer shrink-0">
                 <LogOut className="w-5 h-5" />
             </button>
         </div>

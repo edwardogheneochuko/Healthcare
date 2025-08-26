@@ -3,14 +3,13 @@
 import React, { useState } from 'react';
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
-// import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-// import { auth } from '@/utils/firebase';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Gym from '../global/Gym';
 import { useRouter } from 'next/navigation';
 import { toast } from "sonner";
 import { registerUser } from '@/actions/users';
 import Socials from '../global/Socials';
+import { useAuthStore } from '../store/authStore';
 
 const registerSchema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
@@ -29,7 +28,6 @@ const inputStyles = 'border-2 border-gray-400 w-full h-14 rounded-md placeholder
 
 const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [error] = useState('');
   const router = useRouter();
@@ -45,8 +43,8 @@ const SignUp = () => {
 
     try {
       const result = await registerUser(data);
-
-      if (result.success) {
+      if (result.success && result.data) {
+        useAuthStore.getState().setAuth(result.data.user, result.data.token);
         toast.success("Success!", { description: "Account has been created" });
         router.push("/dashboard");
       } else {
@@ -64,23 +62,6 @@ const SignUp = () => {
     }
   };
 
-  // const GoogleSignup = async () => {
-  //   setError('');
-  //   setLoading(true);
-  //   toast.success("Processing your request...");
-
-  //   try {
-  //     const provider = new GoogleAuthProvider();
-  //     const result = await signInWithPopup(auth, provider);
-  //     console.log('User signed up:', result.user);
-  //     router.push('/dashboard');
-  //   } catch {
-  //     setError('Google signup failed.',);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
   const PasswordInput = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
     return (
@@ -94,7 +75,8 @@ const SignUp = () => {
         <button
           type="button"
           onClick={() => setPasswordVisible(!passwordVisible)}
-          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400
+          cursor-pointer"
         >
           {passwordVisible ? '🙈' : '👁️'}
         </button>
@@ -139,13 +121,6 @@ const SignUp = () => {
           <div className='flex flex-col gap-4 mt-3'>
             <h1 className="text-2xl font-bold mb-2 text-left">Sign up</h1>
             <Socials />
-            {/* <button
-              onClick={GoogleSignup}
-              disabled={loading}
-              className="w-full bg-neutral-200 hover:bg-white duration-200 text-black border rounded-4xl text-lg border-gray-300 py-3 px-4 shadow-sm flex items-center justify-center gap-3 transition disabled:opacity-60 cursor-pointer"
-            >
-              {loading ? 'Processing...' : 'Sign up with Google'}
-            </button> */}
             {error && <p className="text-red-500 text-sm">{error}</p>}
             <div className='flex items-center gap-4'>
               <span className='flex-1 h-px bg-gray-300'></span>

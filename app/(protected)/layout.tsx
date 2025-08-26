@@ -116,7 +116,6 @@ export default function ProtectedLayout({ children }: PropsWithChildren) {
             <Activity />
          </aside>
        </main>
-           Bottom bar at the bottom 
          <BottomBar />
      </div>
     </div>

@@ -1,6 +1,40 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
+Authentication
+This project uses Better Auth for server-side authentication, combined with React, Next.js, and Zustand for client-side state management.
+
+## Features
+Email/Password Signup: Users can create an account using email, password, first name, and last name.
+Email/Password Login: Users can log in with their registered credentials.
+Forgot Password: Users can request a password reset link via email.
+Social Sign-in: (Optional / placeholders exist for Google and GitHub authentication.)
+Client-side Auth State: Zustand is used to store the authenticated user and token.
+
+## Stack / Libraries
+Backend Auth: Better Auth
+Forms & Validation: React Hook Form + Zod
+Notifications: Sonner
+Client State Management: Zustand
+Next.js: App Router with Client Components
+
+## How it works
+Signup:
+
+User submits email, password, first name, and last name.
+registerUser calls auth.api.signUpEmail on the server.
+On success, user is redirected to /dashboard.
+
+Login:
+
+User submits email and password.
+loginUser calls auth.api.signInEmail on the server.
+On success, Zustand stores user and token, and user is redirected to /dashboard.
+
+Forgot Password:
+User submits email.
+sendResetLink calls auth.api.forgetPassword (or forgotPasswordEmail depending on Better Auth version).
+User receives an email with a reset link.
 
 First, run the development server:
 
@@ -13,24 +47,8 @@ pnpm dev
 # or
 bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## test entry
+email: "test@example.com",
+password: "Test1234!",
+firstName: "Test",
+lastName: "User",

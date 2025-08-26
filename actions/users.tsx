@@ -1,3 +1,4 @@
+// actions/users.ts
 'use server';
 
 import { auth } from "@/lib/auth";
@@ -5,7 +6,7 @@ import { RegisterFormValues } from "@/src/auth/Signup";
 
 export async function registerUser(data: RegisterFormValues) {
   try {
-    await auth.api.signUpEmail({
+    const res = await auth.api.signUpEmail({
       body: {
         email: data.email,
         password: data.password,
@@ -14,9 +15,15 @@ export async function registerUser(data: RegisterFormValues) {
         lastName: data.lastName,
       },
     });
+
+    // res may not contain token automatically, so sign them in immediately
+    const loginRes = await auth.api.signInEmail({
+      body: { email: data.email, password: data.password },
+    });
+
     return {
       success: true,
-      data,
+      data: loginRes, // contains user + token/session
       error: null,
     };
   } catch (error: any) {
