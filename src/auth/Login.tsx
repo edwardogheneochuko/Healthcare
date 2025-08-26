@@ -38,6 +38,7 @@ const Login = () => {
       toast.error("Login failed", { description: result.error });
       return;
     }
+    form.reset();
 
     // Store user + token in Zustand
     useAuthStore.getState().setAuth(result.data.user, result.data.token);
