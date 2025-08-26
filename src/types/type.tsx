@@ -10,10 +10,11 @@ export interface SidebarItem {
 }
   
 
-export interface SidebarProps {
+export interface UserProps {
     userName: string;
     onLogout: () => void;
 }
+
 
 export interface Plan {
     name: string;

@@ -25,7 +25,7 @@ const AmbulancePage = () => {
           <p className="text-sm text-gray-300">
             Call our 24/7 emergency line for immediate assistance.
           </p>
-          <p className="mt-2 text-2xl font-bold text-pink-400">+234 800 123 4567</p>
+          <p className="mt-2 text-2xl font-bold text-pink-400">+234 811 406 9715</p>
         </div>
 
         {/* Availability */}

@@ -5,10 +5,10 @@ import { LogOut, PersonStanding, ArrowBigRight, ArrowBigLeft } from 'lucide-reac
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { SidebarProps } from '../types/type';
+import { UserProps } from '../types/type';
 
 
-export default function Sidebar({ userName, onLogout }: SidebarProps) {
+export default function Sidebar({ userName, onLogout }: UserProps) {
   const pathname = usePathname();
   const [open, setOpen] = useState<boolean>(true);
   const toggleButton = () => setOpen((prev) => !prev);

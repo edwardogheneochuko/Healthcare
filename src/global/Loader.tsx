@@ -18,7 +18,7 @@ function LoaderFallback() {
 
 function RotatingDumbbell() {
   const ref = useRef<THREE.Object3D>(null);
-  const fbx = useFBX("/Dumbbelle 7kg.fbx"); // ✅ Loads from public folder
+  const fbx = useFBX("/Dumbbelle 7kg.fbx"); 
 
   useFrame((state, delta) => {
     if (ref.current) {
