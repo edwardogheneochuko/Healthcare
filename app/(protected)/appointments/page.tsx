@@ -64,7 +64,8 @@ const AppointmentsPage = () => {
             </div>
             <button 
               type="submit" 
-              className="w-full py-2 bg-pink-500 hover:bg-pink-600 text-white font-semibold rounded-lg shadow-md transition"
+              className="w-full py-2 bg-pink-500 cursor-pointer
+               hover:bg-pink-600 text-white font-semibold rounded-lg shadow-md transition"
             >
               Book Appointment
             </button>

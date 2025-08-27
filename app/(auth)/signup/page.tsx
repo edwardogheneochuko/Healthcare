@@ -1,11 +1,12 @@
 import SignUp from '@/src/auth/Signup';
+import SlideShow from '@/src/Layout/SlideShow';
 import React from 'react';
 
 const page = () => {
   return (
     <div className='w-full h-screen flex relative bg-black'>
       <div className='w-[40%] h-screen max-md:hidden'>
-        open
+        <SlideShow />
       </div>
 
       {/* Scrollable section */}
