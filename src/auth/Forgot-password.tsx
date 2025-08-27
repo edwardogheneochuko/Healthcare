@@ -50,7 +50,7 @@ export default function ForgotPassword() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto p-6 bg-gray-900 rounded-md text-white shadow-lg"
+      className="max-w-md mx-auto p-6 bg-black rounded-md text-white shadow-lg"
     >
       <Gym />
       <h2 className="text-left font-bold text-2xl mt-5 mb-4">
@@ -67,7 +67,7 @@ export default function ForgotPassword() {
           required
           name="email"
           id="email"
-          placeholder="name@example.com"
+          placeholder="your-email@gmail.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="border-2 border-gray-600 w-full h-14 rounded-md
@@ -80,15 +80,14 @@ export default function ForgotPassword() {
           type="submit"
           disabled={loading}
           className="flex justify-center items-center w-full py-4 rounded-3xl text-lg
-                     bg-blue-500 hover:bg-blue-600 disabled:opacity-50 transition duration-200"
-        >
+                     bg-gray-300 text-black hover:bg-white cursor-pointer
+                     disabled:opacity-50 transition duration-200">
           {loading ? (
             <svg
-              className="animate-spin h-5 w-5 text-white"
+              className="animate-spin h-5 w-5 text-gray-300"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
-              viewBox="0 0 24 24"
-            >
+              viewBox="0 0 24 24">
               <circle
                 className="opacity-25"
                 cx="12"
@@ -123,8 +122,7 @@ export default function ForgotPassword() {
           Remembered your password?
           <Link
             href="/login"
-            className="text-blue-400 font-medium ml-2 hover:underline"
-          >
+            className="text-blue-400 font-medium ml-2 hover:underline text-lg">
             Log in
           </Link>
         </p>
