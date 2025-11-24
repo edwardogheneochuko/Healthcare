@@ -11,7 +11,7 @@ export default function HomePage() {
   const router = useRouter();
 
   useEffect(() => {
-    if (isPending) return; // ⏳ wait until session check finishes
+    if (isPending) return; 
 
     if (session) {
       router.replace('/dashboard');
@@ -22,26 +22,14 @@ export default function HomePage() {
 
   if (isPending) {
     return (
-      <div className="flex h-screen items-center justify-center">
+      <div>
         <Loader />
       </div>
     );
   }
 
-  return null; // nothing while deciding
+  return null; 
 }
 
 
-// import React from 'react'
-// import ProtectedLayout from './(protected)/layout'
 
-
-// const page = () => {
-//   return (
-//     <div>
-//       <ProtectedLayout />
-//     </div>
-//   )
-// }
-
-// export default page

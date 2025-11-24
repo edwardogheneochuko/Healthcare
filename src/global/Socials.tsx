@@ -18,7 +18,7 @@ export default function Socials() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 my-3">
       {/* Google Button */}
       <button
         onClick={() => handleSignIn('google')}

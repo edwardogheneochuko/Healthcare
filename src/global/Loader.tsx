@@ -1,50 +1,19 @@
-"use client";
-
-import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls, Html, useProgress, useFBX } from "@react-three/drei";
-import { Suspense, useRef } from "react";
-import * as THREE from "three";
-
-function LoaderFallback() {
-  const { progress } = useProgress();
+const Loader = () => {
   return (
-    <Html center>
-      <div className="px-4 py-2 bg-black/70 rounded-lg text-white font-bold text-lg">
-        {progress.toFixed(0)}% Loaded
+    <div className="flex flex-col items-center justify-center min-h-screen bg-black">
+      <div className="relative w-20 h-20">
+        <div className="absolute inset-0 rounded-full border-4 border-pink-500 border-t-transparent animate-spin"></div>
+
+        <div className="absolute inset-0 flex items-center justify-center text-4xl animate-pulse">
+          🔥
+        </div>
       </div>
-    </Html>
-  );
-}
 
-function RotatingDumbbell() {
-  const ref = useRef<THREE.Object3D>(null);
-  const fbx = useFBX("/Dumbbelle 7kg.fbx"); 
-
-  useFrame((state, delta) => {
-    if (ref.current) {
-      // Smooth rotation
-      ref.current.rotation.x += delta * 0.8;
-      ref.current.rotation.y += delta * 0.8;
-
-      // Bobbing effect
-      ref.current.position.y = Math.sin(state.clock.getElapsedTime() * 2) * 0.2;
-    }
-  });
-
-  return <primitive ref={ref} object={fbx} scale={[0.02, 0.02, 0.02]} />;
-}
-
-export default function Loader() {
-  return (
-    <div className="w-64 h-64">
-      <Canvas camera={{ position: [3, 3, 3] }}>
-        <ambientLight intensity={0.8} />
-        <pointLight position={[10, 10, 10]} intensity={1.2} />
-        <Suspense fallback={<LoaderFallback />}>
-          <RotatingDumbbell />
-        </Suspense>
-        <OrbitControls enableZoom={false} enablePan={false} />
-      </Canvas>
+      <p className="mt-6 text-white text-lg font-bold animate-pulse">
+        Your Health Is Our Concern
+      </p>
     </div>
   );
-}
+};
+
+export default Loader;

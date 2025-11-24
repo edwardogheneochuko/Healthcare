@@ -24,7 +24,8 @@ const registerSchema = z.object({
 });
 
 export type RegisterFormValues = z.infer<typeof registerSchema>;
-const inputStyles = 'border-2 border-gray-400 w-full h-14 rounded-md placeholder:text-gray-400 placeholder:tracking-widest px-3 mt-2 text-white ';
+const inputStyles = `border-2 border-gray-400 w-full h-11 md:h-14 rounded-md placeholder:text-gray-400
+ placeholder:tracking-widest placeholder:text-sm placeholder:text-base px-3 mt-2 text-white `;
 
 const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -91,31 +92,35 @@ const SignUp = () => {
       <div>
         {isOpen ? (
           <form onSubmit={form.handleSubmit(onSubmit)} className='text-lg space-y-3'>
-            <label>First Name</label>
-            <input type="text" {...form.register("firstName")} placeholder='First Name' className={inputStyles} />
+            <label className='text-sm md:text-base font-semibold '>First Name</label>
+            <input type="text" {...form.register("firstName")} placeholder='----- ----' className={inputStyles} />
             {form.formState.errors.firstName && <p className='text-red-500 text-sm'>{form.formState.errors.firstName.message}</p>}
 
-            <label>Last Name</label>
-            <input type="text" {...form.register("lastName")} placeholder='Last Name' className={inputStyles} />
+            <label className='text-sm md:text-base font-semibold '>Last Name</label>
+            <input type="text" {...form.register("lastName")} placeholder='----- ----' className={inputStyles} />
             {form.formState.errors.lastName && <p className='text-red-500 text-sm'>{form.formState.errors.lastName.message}</p>}
 
-            <label>Email</label>
+            <label className='text-sm md:text-base font-semibold '>Email</label>
             <input type="text" {...form.register("email")} placeholder='your@example.com' className={inputStyles} />
             {form.formState.errors.email && <p className='text-red-500 text-sm'>{form.formState.errors.email.message}</p>}
 
-            <label>Password</label>
+            <label className='text-sm md:text-base font-semibold '>Password</label>
             <PasswordInput />
             {form.formState.errors.password && <p className='text-red-500 text-sm'>{form.formState.errors.password.message}</p>}
 
-            <button
-              type='submit'
-              disabled={isSubmitting}
-              className='text-black w-full py-4 rounded-4xl text-lg bg-neutral-300 hover:bg-white cursor-pointer duration-200 disabled:opacity-60'
-            >
+            <div className="flex justify-center md:block">
+  <button
+    type="submit"
+    disabled={isSubmitting}
+    className="text-black w-2/3 md:w-full py-3 rounded-full text-base md:text-lg bg-neutral-300
+               hover:bg-white cursor-pointer duration-200 disabled:opacity-60"
+  >
               {isSubmitting ? 'Creating Account...' : 'Create Account'}
-            </button>
+  </button>
+</div>
 
-            <p onClick={() => setIsOpen(false)} className='text-center text-gray-600 cursor-pointer'>Back</p>
+            <p onClick={() => setIsOpen(false)}
+             className='text-sm md:text-base text-center text-gray-600 cursor-pointer hover:underline'>Back</p>
           </form>
         ) : (
           <div className='flex flex-col gap-4 mt-3'>

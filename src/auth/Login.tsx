@@ -20,8 +20,9 @@ const loginSchema = z.object({
 
 export type LoginFormValues = z.infer<typeof loginSchema>;
 
-const inputStyles =
-  'border-2 border-gray-400 w-full h-14 rounded-md placeholder:text-gray-400 placeholder:tracking-widest px-3 mt-2 text-white focus:outline-none focus:border-blue-400 transition';
+const inputStyles = `border-2 border-gray-400 placeholder:text-sm placeholder:tracking-widest w-full h-13 
+rounded-md placeholder:text-gray-400 placeholder:tracking-widest pl-3 pr-20 mt-2 text-white focus:outline-none 
+focus:border-blue-400 transition`
 
 const Login = () => {
   const router = useRouter();
@@ -74,9 +75,7 @@ const Login = () => {
     <div>
       <Gym />
       <div className="flex flex-col gap-4">
-        <h2 className="text-left font-bold text-white text-2xl py-2">Log in</h2>
         <Socials />
-
         <div className="flex items-center gap-4">
           <span className="flex-1 h-px bg-gray-300"></span>
           <span className="text-gray-500">or</span>
@@ -86,7 +85,6 @@ const Login = () => {
 
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-5">
         <div>
-          <label className="text-white text-lg">Email</label>
           <input
             type="email"
             {...form.register('email')}
@@ -99,9 +97,8 @@ const Login = () => {
         </div>
 
         <div>
-          <span className="flex justify-between">
-            <label className="text-white text-lg">Password</label>
-            <Link href="/forgot-password" className="text-xs text-red-300 mt-2">
+          <span className="flex justify-end">
+            <Link href="/forgot-password" className="text-xs text-red-300 mt-2 hover:underline transition duration-200">
               Forgot Password
             </Link>
           </span>
@@ -118,7 +115,7 @@ const Login = () => {
           Log in
         </button>
 
-        <div className="text-center text-gray-50">
+        <div className="text-center text-gray-50 text-sm">
           I don&apos;t have an account?{' '}
           <Link href="/signup" className="text-blue-400 font-medium cursor-pointer">
             Sign Up
